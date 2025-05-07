@@ -78,8 +78,6 @@ Dự án được thiết kế theo mô hình:
 - Github desktop
 - SQL sever hoặc Docker
 
----
-
 ### 2. 📦 Clone dự án
 git clone https://github.com/your-username/genz-fashion.git
 cd genz-fashion
@@ -98,15 +96,15 @@ npm run dev
 docker-compose up --build
 
 ### 6.🌐 Truy cập
--Frontend: http://localhost:5173
--Backend API: http://localhost:8080/api
--Swagger: http://localhost:8080/swagger-ui/index.html
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8080/api
+- Swagger: http://localhost:8080/swagger-ui/index.html
 
 ### 7.🧪 Cấu hình Biến Môi Trường
--Frontend (.env):
+- Frontend (.env):
 VITE_API_URL=http://localhost:8080  # Trỏ đến backend
 
--Backend (.yaml):
+- Backend (.yaml):
 server:
   port: 8080
 spring:
@@ -121,8 +119,10 @@ jwt:
   secret: your-secret-key
   expirationMs: 86400000
 
---------------------------------------------------------------------------
+---
+
 ## 🗂️Cấu trúc thư mục
+```plaintext
 ecommerce-project/
 ├── backend/                        # Spring Boot (Java)
 │   ├── src/
@@ -251,10 +251,24 @@ ecommerce-project/
 ├── migrations/          # Nếu dùng tool migration
 ├── .gitignore
 └── LICENSE
---------------------------------------------------------------------------
-##🔒 Chính sách & Bảo mật 
-##📊 Phân tích & mở rộng
---------------------------------------------------------------------------
+---
+
+## 🔒 Chính sách & Bảo mật
+1. **Nhánh chính (`main`)**  
+   - Không push trực tiếp → Luôn tạo nhánh mới (ví dụ: `feature/login`).  
+   - Merge vào `main` qua Pull Request (tự review hoặc nhờ mentor).  
+
+2. **Commit an toàn**  
+   - Tiêu đề bằng tiếng Anh (ví dụ: `Fix login button color`).  
+   - Không commit file `.env`/`node_modules`.  
+
+3. **Backup code**  
+   - Push lên GitHub thường xuyên để tránh mất dữ liệu.
+ 
+## 📊 Phân tích & mở rộng
+- Đánh tag `v1.0.0` cho bản cuối cùng.  
+- Xóa nhánh thừa sau khi merge (ví dụ: `feature/login`).
+
 ## 🧑‍💻 Thành viên nhóm | Team phát triển
 
 | Tên thành viên      | Vai trò                          |
@@ -266,11 +280,11 @@ ecommerce-project/
 | Nguyễn Văn Hùng     | Product Owner - Viết tài liệu    |
 |---------------------|----------------------------------|
 
-#🤝 Đóng góp
+## 🤝 Đóng góp
 Chúng tôi luôn chào đón những đóng góp từ cộng đồng!
 Fork repo này, tạo branch mới và PR
 Thực hiện theo convention đã thiết lập trong repo
 
-#📝 Giấy phép
+## 📝 Giấy phép
 MIT License © 2025 GenZStyle.
 Dự án chỉ phục vụ mục đích học tập – không dùng cho mục đích thương mại nếu chưa có sự cho phép từ nhóm phát triển.
