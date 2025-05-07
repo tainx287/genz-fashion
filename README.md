@@ -278,7 +278,6 @@ ecommerce-project/
 | Vũ Nguyễn Đức Bách  | DevOps + Database                |
 | Văn Thị Ngọc Hà     | UI/UX Designer                   |
 | Nguyễn Văn Hùng     | Product Owner - Viết tài liệu    |
-|---------------------|----------------------------------|
 
 ## 🤝 Đóng góp
 Chúng tôi luôn chào đón những đóng góp từ cộng đồng!
