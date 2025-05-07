@@ -251,8 +251,8 @@ ecommerce-project/
 ├── migrations/          # Nếu dùng tool migration
 ├── .gitignore
 └── LICENSE
+```
 ---
-
 ## 🔒 Chính sách & Bảo mật
 1. **Nhánh chính (`main`)**  
    - Không push trực tiếp → Luôn tạo nhánh mới (ví dụ: `feature/login`).  
