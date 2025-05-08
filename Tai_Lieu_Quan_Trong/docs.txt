@@ -1,0 +1,52 @@
+📘 QUY TẮC ĐẶT TÊN & QUY ƯỚC LÀM VIỆC TRONG GITHUB
++----------------------+---------------------------------------------------------+
+| LOẠI THỰC THỂ       | QUY TẮC ĐẶT TÊN / QUY ƯỚC                               |
++----------------------+---------------------------------------------------------+
+| BRANCH (Nhánh)       | feature/tên-tính-năng                                  |
+|                      | fix/tên-lỗi                                            |
+|                      | hotfix/tên-sửa-khẩn-cấp                                |
+|                      | chore/tên-việc-vặt                                     |
+|                      | release/v1.0                                           |
+|                      | docs/cap-nhat-docs                                     |
+|                      | Quy tắc: chỉ dùng chữ thường, dấu "-", không dấu cách. |
++----------------------+---------------------------------------------------------+
+| COMMIT (Chốt lưu)    | [type] tóm tắt thay đổi                                |
+|                      | Ví dụ: [fix] lỗi phân trang sản phẩm                   |
+|                      | [feat] thêm chức năng đăng nhập                        |
+|                      | [refactor] tối ưu code xử lý đơn hàng                  |
+|                      | [chore] chỉnh lại README, .gitignore                   |
+|                      | Quy tắc: tối đa 50 ký tự dòng đầu, không dấu chấm.     |
++----------------------+---------------------------------------------------------+
+| TAG (Nhãn phát hành) | v1.0.0 , v1.2.3 , v2.0-beta                            |
+|                      | Quy tắc: theo SemVer - major.minor.patch               |
+|                      | Dùng cho release chính, dễ theo dõi phiên bản          |
++----------------------+---------------------------------------------------------+
+| FOLDER / FILE NAME   | Dùng lowercase hoặc camelCase                          |
+|                      | Không dấu cách. Ưu tiên: productController.java        |
+|                      | assets/images/, config/, utils/                        |
++----------------------+---------------------------------------------------------+
+| PULL REQUEST         | feat: thêm module đặt hàng                             |
+|                      | fix: sửa lỗi API không phản hồi                        |
+|                      | Quy tắc: bắt đầu bằng type + mô tả                     |
++----------------------+---------------------------------------------------------+
+| .gitignore           | Đặt ở root repo, loại trừ /target, *.class, .env, v.v. |
++----------------------+---------------------------------------------------------+
+| README.md            | Gồm: Mô tả dự án, Cài đặt, Cách chạy, Thư mục chính    |
++----------------------+---------------------------------------------------------+
+| ENV File (.env)      | Gồm: DB_URL=..., API_KEY=..., SECRET=...               |
+|                      | Không commit file .env chứa thông tin nhạy cảm         |
++----------------------+---------------------------------------------------------+
+🎯 Ghi chú cho dự án nhóm: (có thể comment khi commit = tiếng việt nhưng đặt tiếng anh cho title)
+1.main hoặc master là nhánh chính – chỉ merge khi đã review.
+
+2.Làm việc trên nhánh riêng, đặt tên đúng chuẩn feature/, fix/, refactor/...
+
+3.Commit thường xuyên, rõ nghĩa. Đừng commit chung nhiều chức năng.
+
+4.Mỗi pull request chỉ giải quyết 1 vấn đề hoặc 1 feature duy nhất.
+
+5.Sử dụng .gitignore để tránh commit file rác, file build.
+
+6.Đừng đẩy .env, .idea/, hoặc file cấu hình IDE lên GitHub.
+
+7.Review code trước khi merge (tag thành viên duyệt thủ công hoặc dùng GitHub Flow).
