@@ -79,7 +79,7 @@ Dự án được thiết kế theo mô hình:
 - SQL sever hoặc Docker
 
 ### 2. 📦 Clone dự án
-git clone https://github.com/your-username/genz-fashion.git
+git clone https://github.com/tainx287/genz-fashion.git
 cd genz-fashion
 
 ### 3.🛠️ Backend - `EcommerceApplication.yml`
