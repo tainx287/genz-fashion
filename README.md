@@ -282,6 +282,7 @@ ecommerce-project/
 ## 🤝 Đóng góp
 Chúng tôi luôn chào đón những đóng góp từ cộng đồng!
 Fork repo này, tạo branch mới và PR
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/tainx287/genz-fashion?utm_source=oss&utm_medium=github&utm_campaign=tainx287%2Fgenz-fashion&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 Thực hiện theo convention đã thiết lập trong repo
 
 ## 📝 Giấy phép
