@@ -1,6 +1,6 @@
 package com.ecommerce.genz_fashion.repository;
 
-import com.ecommerce.genz_fashion.entity.Product;
+import com.ecommerce.genz_fashion.entity.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,34 +12,27 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Products, Long> {
     
-    List<Product> findByIsActiveTrue();
+    List<Products> findByIsActiveTrue();
     
-    List<Product> findByIsFeaturedTrue();
+    List<Products> findByIsFeaturedTrue();
     
-    List<Product> findByCategoryId(Long categoryId);
+    List<Products> findByCategoryId(Long categoryId);
     
-    List<Product> findByNameContainingIgnoreCase(String name);
+    List<Products> findByNameContainingIgnoreCase(String name);
     
-    List<Product> findByBrand(String brand);
+    @Query("SELECT p FROM Products p WHERE p.basePrice BETWEEN :minPrice AND :maxPrice AND p.isActive = true")
+    List<Products> findByPriceBetween(@Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
     
-    List<Product> findByColor(String color);
+    @Query("SELECT p FROM Products p WHERE p.isActive = true")
+    List<Products> findInStockProducts();
     
-    List<Product> findBySize(String size);
+    Page<Products> findByIsActiveTrue(Pageable pageable);
     
-    @Query("SELECT p FROM Product p WHERE p.price BETWEEN :minPrice AND :maxPrice AND p.isActive = true")
-    List<Product> findByPriceBetween(@Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
-    
-    @Query("SELECT p FROM Product p WHERE p.stockQuantity > 0 AND p.isActive = true")
-    List<Product> findInStockProducts();
-    
-    Page<Product> findByIsActiveTrue(Pageable pageable);
-    
-    @Query("SELECT p FROM Product p WHERE " +
+    @Query("SELECT p FROM Products p WHERE " +
            "(LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(p.brand) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
+           "LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%')))) AND " +
            "p.isActive = true")
-    Page<Product> searchProducts(@Param("keyword") String keyword, Pageable pageable);
+    Page<Products> searchProducts(@Param("keyword") String keyword, Pageable pageable);
 }

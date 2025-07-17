@@ -15,6 +15,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="chạy thử backend trước, đồng thời cho link để test qua postman">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752727807586" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="chạy thử dự án kiểu gì">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752727577804" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="chạy thử dự án ngay bây giờ">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752727646848" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="có nhiều file/folder thừa không, các thư mục out, target để làm gì">
           <value>
             <GhostTextMetaData>
@@ -75,6 +111,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="khi chạy cổng localhost 8080 luôn bị hiện ra trang login Please sign in, vậy làm thế nào để đăng nhập, dữ liệu tài khoản đã được lưu trữ ở đâu, làm sao để xem và kiểm tra">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752728391169" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="khắc phục lỗi tại file @CategoryController.java">
           <value>
             <GhostTextMetaData>
@@ -94,6 +142,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752675428603" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="kiểm tra và sửa lỗi ở category trong repository và service">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752724363409" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -123,6 +183,78 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="sửa lại file application.propeties theo mẫu sql sever, biết tên database là FashionEcommerce , usernam: TAINX03098, password: 123 . tạo các kết nối hoàn chỉnh">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752729238627" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi tại ProductService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752729691004" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi ở UserRepository và cho biết tại sao lại có lỗi này">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752739195350" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="thực hiện các sửa chữa theo đề xuất">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752747291747" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tóm gọn lại các chức năng và luồng hoạt động của dự án này">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752748206900" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tạm thời sửa SecurityConfig để test các chức năng trước, sau đó đề xuất thay thế h2 database bằng cái nào khác có thể lưu trữ truy cập cho lần sau">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752728653510" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="tự động sửa lại các file còn thiếu">
           <value>
             <GhostTextMetaData>
@@ -135,6 +267,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="xem dự án có cần sửa xóa hay thêm file nào nữa không">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752747171171" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="xin chào, bạn là ai">
           <value>
             <GhostTextMetaData>
@@ -142,6 +286,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1751534320540" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="đồng thời kiểm tra các phụ thuộc, các dependencies, hoặc pom.xml đã được sửa đổi lại chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752729304424" />
                 </list>
               </option>
             </GhostTextMetaData>

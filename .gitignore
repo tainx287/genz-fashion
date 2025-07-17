@@ -45,3 +45,4 @@ replay_pid*
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
+.idea/**/*

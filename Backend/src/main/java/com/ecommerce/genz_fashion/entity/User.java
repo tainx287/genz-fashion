@@ -1,19 +1,15 @@
 package com.ecommerce.genz_fashion.entity;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="User")
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String username;
     private String email;
@@ -27,15 +23,20 @@ public class User {
     private Date updatedAt;
     @Temporal(TemporalType.DATE)
     private Date deletedAt;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private Boolean isActive;
+    
+    public enum Role {
+        CUSTOMER, ADMIN, STAFF
+    }
     
 	public User() {
 		super();
 	}
 
 	public User(Long userId, String username, String email, String passwordHash, String fullName, String phoneNumber,
-			Long addressId, Date createdAt, Date updatedAt, Date deletedAt, String role, Boolean isActive) {
+			Long addressId, Date createdAt, Date updatedAt, Date deletedAt, Role role, Boolean isActive) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -131,12 +132,39 @@ public class User {
 		this.deletedAt = deletedAt;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	// Additional methods for AuthService compatibility
+	public String getPassword() {
+		return passwordHash;
+	}
+	
+	public void setPassword(String password) {
+		this.passwordHash = password;
+	}
+	
+	public String getPhone() {
+		return phoneNumber;
+	}
+	
+	public void setPhone(String phone) {
+		this.phoneNumber = phone;
+	}
+	
+	public void setCreatedAt(LocalDateTime createdAt) {
+		// Convert LocalDateTime to Date for compatibility
+		this.createdAt = java.sql.Timestamp.valueOf(createdAt);
+	}
+	
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		// Convert LocalDateTime to Date for compatibility
+		this.updatedAt = java.sql.Timestamp.valueOf(updatedAt);
 	}
 
 	public Boolean getIsActive() {
