@@ -3,6 +3,18 @@
   <component name="GhostTextManager">
     <option name="inputs">
       <map>
+        <entry key="bổ sung hết toàn bộ code trong các file /folder còn thiếu">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752722976115" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="có nhiều file/folder thừa không, các thư mục out, target để làm gì">
           <value>
             <GhostTextMetaData>
@@ -58,6 +70,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752669667139" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="khắc phục lỗi tại file @CategoryController.java">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752723819342" />
                 </list>
               </option>
             </GhostTextMetaData>

@@ -1,20 +1,21 @@
 package com.ecommerce.genz_fashion.repository;
 
-import com.ecommerce.genz_fashion.entity.Category;
+import com.ecommerce.genz_fashion.entity.Categories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<Categories, Long> {
     
-    Optional<Category> findByName(String name);
+    List<Categories> findByIsActiveTrue();
     
-    List<Category> findByIsActiveTrue();
+    List<Categories> findByParentIdIsNull();
+    
+    List<Categories> findByParentId(Long parentId);
+    
+    List<Categories> findByNameContainingIgnoreCase(String name);
     
     boolean existsByName(String name);
-    
-    List<Category> findByNameContainingIgnoreCase(String name);
 }
