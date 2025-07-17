@@ -3,6 +3,54 @@
   <component name="GhostTextManager">
     <option name="inputs">
       <map>
+        <entry key="có nhiều file/folder thừa không, các thư mục out, target để làm gì">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752719966021" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="có thể sửa chữa tự động và tôi cấp quyền cho tự thay đổi các file được không">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752677135335" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="dự án còn thiếu gì không">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752717116456" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="giúp tôi kiểm tra lại toàn bộ thư mục, có khá nhiều lỗi import đang diễn ra vượt ngoài sự kiểm soát">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752672336496" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="hãy giúp tôi kiểm tra các lỗi tiềm ẩn trong dự án và tìm cách khắc phục chúng">
           <value>
             <GhostTextMetaData>
@@ -15,6 +63,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="kiểm tra lại dự án xem đã chạy được chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752675428603" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="kiểm tra xem nội dung của file này là gì">
           <value>
             <GhostTextMetaData>
@@ -22,6 +82,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1751534361895" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="mvn không chạy dự án mà ra một trang trắng tinh">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1752680930287" />
                 </list>
               </option>
             </GhostTextMetaData>
