@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="InventoryLogs")
 public class InventoryLogs {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
     private Long variantId;
     private String changeType;

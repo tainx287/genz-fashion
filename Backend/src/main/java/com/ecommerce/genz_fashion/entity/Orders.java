@@ -2,20 +2,24 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="Orders")
 public class Orders {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long orderId;
+    
+    @Column(name = "user_id")
     private Long userId;
+    
+    // JPA Relationship with User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
     private Long addressId;
     @Temporal(TemporalType.DATE)
     private Date orderDate;
@@ -23,9 +27,17 @@ public class Orders {
     private Double discountAmount;
     private Double shippingFee;
     private Double totalAmount;
-    private String orderStatus;
-    private String paymentMethod;
-    private String paymentStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
+    private OrderStatus orderStatus;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
+    private PaymentMethod paymentMethod;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus;
     private String voucherCode;
     private String notes;
     @Temporal(TemporalType.DATE)
@@ -71,6 +83,17 @@ public class Orders {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+		if (user != null) {
+			this.userId = user.getUserId();
+		}
 	}
 
 	public Long getAddressId() {
@@ -121,27 +144,27 @@ public class Orders {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getOrderStatus() {
+	public OrderStatus getOrderStatus() {
 		return orderStatus;
 	}
 
-	public void setOrderStatus(String orderStatus) {
+	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
 	}
 
-	public String getPaymentMethod() {
+	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public String getPaymentStatus() {
+	public PaymentStatus getPaymentStatus() {
 		return paymentStatus;
 	}
 
-	public void setPaymentStatus(String paymentStatus) {
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 
@@ -177,5 +200,15 @@ public class Orders {
 		this.cancelledReason = cancelledReason;
 	}
     
-	
+    public enum OrderStatus {
+        pending, confirmed, processing, shipped, delivered, cancelled
+    }
+    
+    public enum PaymentMethod {
+        cod, credit_card, paypal, bank_transfer
+    }
+    
+    public enum PaymentStatus {
+        unpaid, paid, partial, refunded
+    }
 }

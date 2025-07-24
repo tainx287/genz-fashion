@@ -4,31 +4,58 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
-@Table(name="User")
+@Table(name="Users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
     private Long userId;
+    
+    @NotBlank(message = "Tên đăng nhập không được để trống")
+    @Size(min = 3, max = 50, message = "Tên đăng nhập phải từ 3-50 ký tự")
     private String username;
+    
+    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email không hợp lệ")
+    @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
     private String email;
+    
+    @NotBlank(message = "Mật khẩu không được để trống")
+    @Column(name = "password_hash")
     private String passwordHash;
+    
+    @Size(max = 100, message = "Họ tên không được vượt quá 100 ký tự")
+    @Column(name = "full_name")
     private String fullName;
+    
+    @Pattern(regexp = "^[0-9+\\-\\s()]*$", message = "Số điện thoại không hợp lệ")
+    @Size(max = 15, message = "Số điện thoại không được vượt quá 15 ký tự")
+    @Column(name = "phone_number")
     private String phoneNumber;
-    private Long addressId;
+    
+    // JPA Relationship with Address
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
     @Temporal(TemporalType.DATE)
+    @Column(name = "created_at")
     private Date createdAt;
     @Temporal(TemporalType.DATE)
+    @Column(name = "updated_at")
     private Date updatedAt;
     @Temporal(TemporalType.DATE)
+    @Column(name = "deleted_at")
     private Date deletedAt;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "is_active")
     private Boolean isActive;
     
     public enum Role {
-        CUSTOMER, ADMIN, STAFF
+        customer, admin, staff
     }
     
 	public User() {

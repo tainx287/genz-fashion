@@ -2,32 +2,54 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="Products")
 public class Products {
 	@Id
-    private Long productId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "product_id")
+	private Long productId;
+	
+    @NotBlank(message = "SKU không được để trống")
+    @Size(max = 50, message = "SKU không được vượt quá 50 ký tự")
     private String sku;
+    
+    @Size(max = 100, message = "Barcode không được vượt quá 100 ký tự")
     private String barcode;
+    
+    @NotBlank(message = "Tên sản phẩm không được để trống")
+    @Size(max = 100, message = "Tên sản phẩm không được vượt quá 100 ký tự")
     private String name;
+    
+    @Size(max = 1000, message = "Mô tả không được vượt quá 1000 ký tự")
     private String description;
+    
+    @NotNull(message = "Giá cơ bản không được để trống")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Giá phải lớn hơn 0")
+    @Column(name = "base_price")
     private Double basePrice;
-    private Long categoryId;
-    private Long brandId;
+    
+    // JPA Relationships
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Categories category;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brands brand;
+    @Column(name = "is_active")
     private Boolean isActive;
     @Temporal(TemporalType.DATE)
+    @Column(name = "created_at")
     private Date createdAt;
     @Temporal(TemporalType.DATE)
+    @Column(name = "updated_at")
     private Date updatedAt;
     @Temporal(TemporalType.DATE)
+    @Column(name = "deleted_at")
     private Date deletedAt;
     
 	public Products() {
@@ -35,7 +57,7 @@ public class Products {
 	}
 
 	public Products(Long productId, String sku, String barcode, String name, String description, Double basePrice,
-			Long categoryId, Long brandId, Boolean isActive, Date createdAt, Date updatedAt, Date deletedAt) {
+			Categories category, Brands brand, Boolean isActive, Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.productId = productId;
 		this.sku = sku;
@@ -43,8 +65,8 @@ public class Products {
 		this.name = name;
 		this.description = description;
 		this.basePrice = basePrice;
-		this.categoryId = categoryId;
-		this.brandId = brandId;
+		this.category = category;
+		this.brand = brand;
 		this.isActive = isActive;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -99,20 +121,20 @@ public class Products {
 		this.basePrice = basePrice;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public Categories getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(Categories category) {
+		this.category = category;
 	}
 
-	public Long getBrandId() {
-		return brandId;
+	public Brands getBrand() {
+		return brand;
 	}
 
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
+	public void setBrand(Brands brand) {
+		this.brand = brand;
 	}
 
 	public Boolean getIsActive() {

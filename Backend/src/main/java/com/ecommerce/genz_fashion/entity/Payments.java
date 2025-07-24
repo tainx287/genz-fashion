@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Payments")
 public class Payments {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
     private Long orderId;
     @Temporal(TemporalType.DATE)

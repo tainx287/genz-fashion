@@ -2,26 +2,43 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="Brands")
 public class Brands {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "brand_id")
     private Long brandId;
+    
+    @NotBlank(message = "Tên thương hiệu không được để trống")
+    @Size(max = 100, message = "Tên thương hiệu không được vượt quá 100 ký tự")
+    @Column(name = "brand_name")
     private String brandName;
+    
+    @Size(max = 1000, message = "Mô tả không được vượt quá 1000 ký tự")
     private String description;
+    
+    @Size(max = 500, message = "URL logo không được vượt quá 500 ký tự")
+    @Column(name = "logo_url")
     private String logoUrl;
+    
+    @Size(max = 255, message = "Website không được vượt quá 255 ký tự")
     private String website;
+    
+    @Email(message = "Email không hợp lệ")
+    @Size(max = 100, message = "Email không được vượt quá 100 ký tự")
+    @Column(name = "contact_email")
     private String contactEmail;
+    
+    @Size(max = 20, message = "Số điện thoại không được vượt quá 20 ký tự")
+    @Column(name = "contact_phone")
     private String contactPhone;
+    
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Products> products = new ArrayList<>();
     private Boolean isActive;
     @Temporal(TemporalType.DATE)
     private Date createdAt;
@@ -47,6 +64,7 @@ public class Brands {
 		this.isActive = isActive;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.products = new ArrayList<>();
 	}
 
 
@@ -148,8 +166,12 @@ public class Brands {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-    
-	
-	
-    
+
+	public List<Products> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Products> products) {
+		this.products = products;
+	}
 }

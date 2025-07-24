@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="PublicVouchers")
 public class PublicVouchers {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voucherId;
     private String code;
     private String name;

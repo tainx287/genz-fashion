@@ -1,7 +1,11 @@
 package com.ecommerce.genz_fashion.service;
 
 import com.ecommerce.genz_fashion.entity.Products;
+import com.ecommerce.genz_fashion.entity.Categories;
+import com.ecommerce.genz_fashion.entity.Brands;
 import com.ecommerce.genz_fashion.repository.ProductRepository;
+import com.ecommerce.genz_fashion.repository.CategoryRepository;
+import com.ecommerce.genz_fashion.repository.BrandsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +22,8 @@ import java.util.Optional;
 public class ProductService {
     
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final BrandsRepository brandsRepository;
     
     public List<Products> getAllProducts() {
         return productRepository.findAll();
@@ -36,7 +42,9 @@ public class ProductService {
     }
     
     public List<Products> getProductsByCategory(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
+        Categories category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        return productRepository.findByCategory(category);
     }
     
     public List<Products> searchProducts(String keyword) {
@@ -66,8 +74,15 @@ public class ProductService {
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
         product.setBasePrice(productDetails.getBasePrice());
-        product.setCategoryId(productDetails.getCategoryId());
-        product.setBrandId(productDetails.getBrandId());
+        
+        // Sử dụng JPA relationships
+        if (productDetails.getCategory() != null) {
+            product.setCategory(productDetails.getCategory());
+        }
+        if (productDetails.getBrand() != null) {
+            product.setBrand(productDetails.getBrand());
+        }
+        
         product.setSku(productDetails.getSku());
         product.setBarcode(productDetails.getBarcode());
         

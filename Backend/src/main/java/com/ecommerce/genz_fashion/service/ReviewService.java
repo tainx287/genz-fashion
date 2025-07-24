@@ -1,6 +1,6 @@
 package com.ecommerce.genz_fashion.service;
 
-import com.ecommerce.genz_fashion.entity.Review;
+import com.ecommerce.genz_fashion.entity.Reviews;
 import com.ecommerce.genz_fashion.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ public class ReviewService {
     
     private final ReviewRepository reviewRepository;
     
-    public List<Review> getAllReviews() {
+    public List<Reviews> getAllReviews() {
         return reviewRepository.findAll();
     }
     
-    public Optional<Review> getReviewById(Long id) {
+    public Optional<Reviews> getReviewById(Long id) {
         return reviewRepository.findById(id);
     }
     

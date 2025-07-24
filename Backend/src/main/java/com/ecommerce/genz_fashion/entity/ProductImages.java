@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="ProductImages")
 public class ProductImages {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
     private Long productId;
     private Long variantId;

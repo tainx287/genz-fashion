@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Sizes")
 public class Sizes {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sizeId;
     private String sizeName;
     private Integer sizeOrder;

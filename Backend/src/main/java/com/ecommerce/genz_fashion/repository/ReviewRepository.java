@@ -1,6 +1,6 @@
 package com.ecommerce.genz_fashion.repository;
 
-import com.ecommerce.genz_fashion.entity.Review;
+import com.ecommerce.genz_fashion.entity.Reviews;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Reviews, Long> {
     
-    List<Review> findByProductId(Long productId);
+    List<Reviews> findByProductId(Long productId);
     
-    List<Review> findByUserId(Long userId);
+    List<Reviews> findByUserId(Long userId);
     
-    List<Review> findByProductIdOrderByCreatedAtDesc(Long productId);
+    List<Reviews> findByProductIdOrderByCreatedAtDesc(Long productId);
     
-    List<Review> findByRating(Integer rating);
+    List<Reviews> findByRating(Integer rating);
     
     @Query("SELECT AVG(r.rating) FROM Review r WHERE r.product.productId = :productId")
     Double getAverageRatingByProduct(@Param("productId") Long productId);

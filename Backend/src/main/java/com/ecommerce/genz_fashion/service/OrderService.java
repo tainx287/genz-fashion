@@ -1,7 +1,7 @@
 package com.ecommerce.genz_fashion.service;
 
-import com.ecommerce.genz_fashion.entity.Order;
-import com.ecommerce.genz_fashion.entity.OrderItem;
+import com.ecommerce.genz_fashion.entity.Orders;
+import com.ecommerce.genz_fashion.entity.OrderItems;
 import com.ecommerce.genz_fashion.entity.User;
 import com.ecommerce.genz_fashion.repository.OrderRepository;
 import com.ecommerce.genz_fashion.repository.OrderItemRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,50 +24,50 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     
-    public List<Order> getAllOrders() {
+    public List<Orders> getAllOrders() {
         return orderRepository.findAll();
     }
     
-    public Optional<Order> getOrderById(Long id) {
+    public Optional<Orders> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
     
-    public List<Order> getOrdersByUser(User user) {
+    public List<Orders> getOrdersByUser(User user) {
         return orderRepository.findByUserOrderByOrderDateDesc(user);
     }
     
-    public List<Order> getOrdersByUserId(Long userId) {
+    public List<Orders> getOrdersByUserId(Long userId) {
         return orderRepository.findByUserIdOrderByOrderDateDesc(userId);
     }
     
-    public List<Order> getOrdersByStatus(Order.OrderStatus status) {
+    public List<Orders> getOrdersByStatus(Orders.OrderStatus status) {
         return orderRepository.findByOrderStatus(status);
     }
     
-    public Page<Order> getOrdersWithPagination(Pageable pageable) {
+    public Page<Orders> getOrdersWithPagination(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
     
-    public Order createOrder(Order order) {
-        order.setOrderDate(LocalDateTime.now());
-        order.setOrderStatus(Order.OrderStatus.PENDING);
+    public Orders createOrder(Orders order) {
+        order.setOrderDate(new Date());
+        order.setOrderStatus(Orders.OrderStatus.pending);
         return orderRepository.save(order);
     }
     
-    public Order updateOrderStatus(Long orderId, Order.OrderStatus status) {
-        Order order = orderRepository.findById(orderId)
+    public Orders updateOrderStatus(Long orderId, Orders.OrderStatus status) {
+        Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         
         order.setOrderStatus(status);
-        if (status == Order.OrderStatus.CANCELLED) {
-            order.setCancelledAt(LocalDateTime.now());
+        if (status == Orders.OrderStatus.cancelled) {
+            order.setCancelledAt(new Date());
         }
         
         return orderRepository.save(order);
     }
     
-    public Order updateOrder(Long id, Order orderDetails) {
-        Order order = orderRepository.findById(id)
+    public Orders updateOrder(Long id, Orders orderDetails) {
+        Orders order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         
         order.setShippingAddress(orderDetails.getShippingAddress());
@@ -77,32 +77,32 @@ public class OrderService {
     }
     
     public void cancelOrder(Long orderId, String reason) {
-        Order order = orderRepository.findById(orderId)
+        Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         
-        if (order.getOrderStatus() == Order.OrderStatus.DELIVERED) {
+        if (order.getOrderStatus() == Orders.OrderStatus.delivered) {
             throw new RuntimeException("Cannot cancel delivered order");
         }
         
-        order.setOrderStatus(Order.OrderStatus.CANCELLED);
-        order.setCancelledAt(LocalDateTime.now());
+        order.setOrderStatus(Orders.OrderStatus.cancelled);
+        order.setCancelledAt(new Date());
         order.setCancelledReason(reason);
         
         orderRepository.save(order);
     }
     
     public BigDecimal calculateOrderTotal(Long orderId) {
-        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
+        List<OrderItems> orderItems = orderItemRepository.findByOrderId(orderId);
         return orderItems.stream()
                 .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
-    public List<Order> getRecentOrders(int limit) {
+    public List<Orders> getRecentOrders(int limit) {
         return orderRepository.findTopNByOrderByOrderDateDesc(limit);
     }
     
-    public List<Order> getOrdersByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Orders> getOrdersByDateRange(Date startDate, Date endDate) {
         return orderRepository.findByOrderDateBetween(startDate, endDate);
     }
     

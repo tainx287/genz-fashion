@@ -1,6 +1,6 @@
 package com.ecommerce.genz_fashion.controller.api;
 
-import com.ecommerce.genz_fashion.entity.Order;
+import com.ecommerce.genz_fashion.entity.Orders;
 import com.ecommerce.genz_fashion.entity.User;
 import com.ecommerce.genz_fashion.service.AuthService;
 import com.ecommerce.genz_fashion.service.OrderService;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -27,23 +27,23 @@ public class OrderController {
     
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<List<Orders>> getAllOrders() {
+        List<Orders> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
     
     @GetMapping("/paginated")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Page<Order>> getOrdersWithPagination(
+    public ResponseEntity<Page<Orders>> getOrdersWithPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Order> orders = orderService.getOrdersWithPagination(pageable);
+        Page<Orders> orders = orderService.getOrdersWithPagination(pageable);
         return ResponseEntity.ok(orders);
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<Orders> getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id)
                 .map(order -> ResponseEntity.ok().body(order))
                 .orElse(ResponseEntity.notFound().build());
@@ -51,35 +51,35 @@ public class OrderController {
     
     @GetMapping("/my-orders")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<List<Order>> getMyOrders() {
+    public ResponseEntity<List<Orders>> getMyOrders() {
         User currentUser = authService.getCurrentUser()
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        List<Order> orders = orderService.getOrdersByUser(currentUser);
+        List<Orders> orders = orderService.getOrdersByUser(currentUser);
         return ResponseEntity.ok(orders);
     }
     
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
-        List<Order> orders = orderService.getOrdersByUserId(userId);
+    public ResponseEntity<List<Orders>> getOrdersByUserId(@PathVariable Long userId) {
+        List<Orders> orders = orderService.getOrdersByUserId(userId);
         return ResponseEntity.ok(orders);
     }
     
     @GetMapping("/status/{status}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Order>> getOrdersByStatus(@PathVariable Order.OrderStatus status) {
-        List<Order> orders = orderService.getOrdersByStatus(status);
+    public ResponseEntity<List<Orders>> getOrdersByStatus(@PathVariable Orders.OrderStatus status) {
+        List<Orders> orders = orderService.getOrdersByStatus(status);
         return ResponseEntity.ok(orders);
     }
     
     @PostMapping
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orders order) {
         try {
             User currentUser = authService.getCurrentUser()
                     .orElseThrow(() -> new RuntimeException("User not found"));
             order.setUser(currentUser);
-            Order createdOrder = orderService.createOrder(order);
+            Orders createdOrder = orderService.createOrder(order);
             return ResponseEntity.ok(createdOrder);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -87,9 +87,9 @@ public class OrderController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @Valid @RequestBody Order orderDetails) {
+    public ResponseEntity<Orders> updateOrder(@PathVariable Long id, @Valid @RequestBody Orders orderDetails) {
         try {
-            Order updatedOrder = orderService.updateOrder(id, orderDetails);
+            Orders updatedOrder = orderService.updateOrder(id, orderDetails);
             return ResponseEntity.ok(updatedOrder);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -98,9 +98,9 @@ public class OrderController {
     
     @PutMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam Order.OrderStatus status) {
+    public ResponseEntity<Orders> updateOrderStatus(@PathVariable Long id, @RequestParam Orders.OrderStatus status) {
         try {
-            Order updatedOrder = orderService.updateOrderStatus(id, status);
+            Orders updatedOrder = orderService.updateOrderStatus(id, status);
             return ResponseEntity.ok(updatedOrder);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -129,8 +129,8 @@ public class OrderController {
     
     @GetMapping("/recent")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Order>> getRecentOrders(@RequestParam(defaultValue = "10") int limit) {
-        List<Order> orders = orderService.getRecentOrders(limit);
+    public ResponseEntity<List<Orders>> getRecentOrders(@RequestParam(defaultValue = "10") int limit) {
+        List<Orders> orders = orderService.getRecentOrders(limit);
         return ResponseEntity.ok(orders);
     }
     

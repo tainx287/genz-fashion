@@ -13,6 +13,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Wishlists")
 public class Wishlists {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishlistId;
     private Long userId;
     @Temporal(TemporalType.DATE)

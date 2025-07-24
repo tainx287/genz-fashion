@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="UserOAuth")
 public class UserOAuth {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oauthId;
     private Long userId;
     private String provider;

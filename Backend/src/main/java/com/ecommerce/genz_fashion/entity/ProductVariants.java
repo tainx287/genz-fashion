@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="ProductVariants")
 public class ProductVariants {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long variantId;
     private Long productId;
     private String variantSku;

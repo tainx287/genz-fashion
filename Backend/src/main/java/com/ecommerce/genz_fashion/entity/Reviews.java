@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Reviews")
 public class Reviews {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     private Long productId;
     private Long userId;

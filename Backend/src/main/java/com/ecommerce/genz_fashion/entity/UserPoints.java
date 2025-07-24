@@ -13,6 +13,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="UserPoints")
 public class UserPoints {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
     private Long userId;
     private Integer pointsBalance;

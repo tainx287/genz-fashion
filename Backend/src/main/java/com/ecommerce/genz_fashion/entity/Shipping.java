@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Shipping")
 public class Shipping {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shippingId;
     private Long orderId;
     private String shippingMethod;

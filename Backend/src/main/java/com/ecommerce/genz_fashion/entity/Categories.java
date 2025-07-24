@@ -2,22 +2,34 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="Categories")
 public class Categories {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "category_id")
     private Long categoryId;
+    
+    @NotBlank(message = "Tên danh mục không được để trống")
+    @Size(max = 50, message = "Tên danh mục không được vượt quá 50 ký tự")
     private String name;
+    
+    @Size(max = 1000, message = "Mô tả không được vượt quá 1000 ký tự")
     private String description;
-    private Long parentId;
+    
+    // Self-referencing relationship
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Categories parent;
+    
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Categories> children = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Products> products = new ArrayList<>();
     private Boolean isActive;
     @Temporal(TemporalType.DATE)
     private Date createdAt;
@@ -30,13 +42,13 @@ public class Categories {
 	}
 
 
-	public Categories(Long categoryId, String name, String description, Long parentId, Boolean isActive, Date createdAt,
+	public Categories(Long categoryId, String name, String description, Categories parent, Boolean isActive, Date createdAt,
 			Date deletedAt) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;
-		this.parentId = parentId;
+		this.parent = parent;
 		this.isActive = isActive;
 		this.createdAt = createdAt;
 		this.deletedAt = deletedAt;
@@ -73,13 +85,28 @@ public class Categories {
 	}
 
 
-	public Long getParentId() {
-		return parentId;
+	public Categories getParent() {
+		return parent;
 	}
 
+	public void setParent(Categories parent) {
+		this.parent = parent;
+	}
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
+	public List<Categories> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Categories> children) {
+		this.children = children;
+	}
+
+	public List<Products> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Products> products) {
+		this.products = products;
 	}
 
 

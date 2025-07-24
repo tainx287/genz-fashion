@@ -3,6 +3,18 @@
   <component name="GhostTextManager">
     <option name="inputs">
       <map>
+        <entry key="Implement JPA Relationships (@&lt;file_name&gt;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753362725286" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="bổ sung hết toàn bộ code trong các file /folder còn thiếu">
           <value>
             <GhostTextMetaData>
@@ -10,6 +22,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752722976115" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="chương trình đã kết nối được chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753348876597" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -63,6 +87,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="chạy được thì thông báo, nếu không cứ tiếp tục sửa lỗi cho đến khi kết nối dữ liệu được thì báo">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753346372200" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="có nhiều file/folder thừa không, các thư mục out, target để làm gì">
           <value>
             <GhostTextMetaData>
@@ -106,6 +142,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752717116456" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="entity và service đang gặp vấn đề gì so với csdl chuẩn ?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753361277124" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -159,6 +207,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="không thể kết nối với sever \ D:\DuAnTotNghiep\genz-fashion\Backend\src\main\java\com\ecommerce\genz_fashion\controller\api\OrderController.java:70:79&#10;java: cannot find symbol&#10;  symbol:   class OrderStatus&#10;  location: class com.ecommerce.genz_fashion.entity.Orders">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753365639686" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="khắc phục lỗi tại file @CategoryController.java">
           <value>
             <GhostTextMetaData>
@@ -166,6 +226,30 @@
               <option name="timestamps">
                 <list>
                   <option value="1752723819342" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="kiểm tra entity trong main backend">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753359718080" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="kiểm tra kết nối với csdl chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753346065527" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -207,6 +291,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="kết nối dữ liệu và chạy thử postman">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753367025368" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="làm sao để test được backend">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753349014949" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="lệnh chạy backend">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753341347226" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="mvn không chạy dự án mà ra một trang trắng tinh">
           <value>
             <GhostTextMetaData>
@@ -219,6 +339,30 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="service đã chạy những chức năng nào, đã liên kết với repository chưa, entity ánh xạ từ bảng cơ sở dữ liệu nào, đã khớp hết hay chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753366640460" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa các file còn thiếu và cho lệnh chạy thử chương trình để test postman">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753345517078" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="sửa lại file application.propeties theo mẫu sql sever, biết tên database là FashionEcommerce , usernam: TAINX03098, password: 123 . tạo các kết nối hoàn chỉnh">
           <value>
             <GhostTextMetaData>
@@ -226,6 +370,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752729238627" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi trên trang này">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753368032711" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -255,6 +411,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="thêm  @&lt;file_name&gt;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753361580898" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="thực hiện các sửa chữa theo đề xuất">
           <value>
             <GhostTextMetaData>
@@ -267,6 +435,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="trang oderitemrepository lỗi gì thế">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753366039741" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="tóm gọn lại các chức năng và luồng hoạt động của dự án này">
           <value>
             <GhostTextMetaData>
@@ -274,6 +454,42 @@
               <option name="timestamps">
                 <list>
                   <option value="1752748206900" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tại sao chạy mvn spring-boot: run, file mvn bật lên, nhưng ra trang web trắng tinh?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753366324214" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tại sao lại ra link này file:///C:/WINDOWS/system32/mvn và file trang trắng trơn">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753341597186" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tại sao trang mvn lại trống trơn không có gì">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753352861873" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -303,6 +519,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="vậy chạy thử chương trình ở đâu">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753363069667" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="xem dự án có cần sửa xóa hay thêm file nào nữa không">
           <value>
             <GhostTextMetaData>
@@ -322,6 +550,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1751534320540" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="xử lý các vấn đề : OrderService có lỗi nhỏ:&#10;Dòng 54: Order order thay vì Orders order&#10;Một số method sử dụng LocalDateTime thay vì Date&#10;ProductService chưa sử dụng JPA relationships:&#10;Vẫn dùng setCategoryId(), setBrandId() thay vì setCategory(), setBrand()&#10;Thiếu Service cho một số entity:&#10;PaymentService, ShippingService, VoucherService&#10;InventoryService, ActivityLogService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753366806847" />
                 </list>
               </option>
             </GhostTextMetaData>

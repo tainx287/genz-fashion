@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Colors")
 public class Colors {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long colorId;
     private String colorName;
     private String colorCode;

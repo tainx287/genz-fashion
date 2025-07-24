@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="Cart")
 public class Cart {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
     private Long userId;
     @Temporal(TemporalType.DATE)

@@ -1,6 +1,6 @@
 package com.ecommerce.genz_fashion.controller.api;
 
-import com.ecommerce.genz_fashion.entity.CartItem;
+import com.ecommerce.genz_fashion.entity.CartItems;
 import com.ecommerce.genz_fashion.entity.User;
 import com.ecommerce.genz_fashion.service.AuthService;
 import com.ecommerce.genz_fashion.service.CartService;
@@ -23,19 +23,19 @@ public class CartController {
     private final AuthService authService;
     
     @GetMapping
-    public ResponseEntity<List<CartItem>> getCartItems() {
+    public ResponseEntity<List<CartItems>> getCartItems() {
         User currentUser = authService.getCurrentUser()
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        List<CartItem> cartItems = cartService.getCartItems(currentUser.getUserId());
+        List<CartItems> cartItems = cartService.getCartItems(currentUser.getUserId());
         return ResponseEntity.ok(cartItems);
     }
     
     @PostMapping("/add")
-    public ResponseEntity<CartItem> addItemToCart(@RequestParam Long productId, @RequestParam Integer quantity) {
+    public ResponseEntity<CartItems> addItemToCart(@RequestParam Long productId, @RequestParam Integer quantity) {
         try {
             User currentUser = authService.getCurrentUser()
                     .orElseThrow(() -> new RuntimeException("User not found"));
-            CartItem cartItem = cartService.addItemToCart(currentUser.getUserId(), productId, quantity);
+            CartItems cartItem = cartService.addItemToCart(currentUser.getUserId(), productId, quantity);
             return ResponseEntity.ok(cartItem);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -43,9 +43,9 @@ public class CartController {
     }
     
     @PutMapping("/update/{cartItemId}")
-    public ResponseEntity<CartItem> updateCartItemQuantity(@PathVariable Long cartItemId, @RequestParam Integer quantity) {
+    public ResponseEntity<CartItems> updateCartItemQuantity(@PathVariable Long cartItemId, @RequestParam Integer quantity) {
         try {
-            CartItem cartItem = cartService.updateCartItemQuantity(cartItemId, quantity);
+            CartItems cartItem = cartService.updateCartItemQuantity(cartItemId, quantity);
             if (cartItem == null) {
                 return ResponseEntity.ok().build(); // Item was removed due to quantity 0
             }

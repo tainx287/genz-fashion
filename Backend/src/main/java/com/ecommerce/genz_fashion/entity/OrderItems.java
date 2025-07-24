@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 @Table(name="OrderItems")
 public class OrderItems {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
     private Long orderId;
     private Long variantId;
