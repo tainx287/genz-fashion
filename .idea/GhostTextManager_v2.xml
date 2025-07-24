@@ -15,6 +15,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="chạy lệnh nào để kiểm tra cơ sở dữ liệu đã kết nối chưa?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753147783324" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="chạy thử backend trước, đồng thời cho link để test qua postman">
           <value>
             <GhostTextMetaData>
@@ -75,6 +87,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="duyệt thư mục dự án, thêm 1 file nào đó để chạy được dòng chữ in ra terminal là &quot;đã kết nối thành công với CSDL GenZFashion&quot;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753251636030" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="dự án còn thiếu gì không">
           <value>
             <GhostTextMetaData>
@@ -106,6 +130,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752669667139" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="ite-deploy. -&gt; [Help 1]&#10;[ERROR]&#10;[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.&#10;[ERROR] Re-run Maven using the -X switch to enable full debug logging.&#10;[ERROR]&#10;[ERROR] For more information about the errors and possible solutions, please read the following articles:&#10;[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException&#10;PS D:\DuAnTotNghiep\genz-fashion\Backend&gt;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753251752374" />
                 </list>
               </option>
             </GhostTextMetaData>
