@@ -27,9 +27,7 @@ public class ShippingService {
     }
     
     public Optional<Shipping> getShippingByOrderId(Long orderId) {
-        return shippingRepository.findAll().stream()
-                .filter(shipping -> shipping.getOrderId().equals(orderId))
-                .findFirst();
+        return shippingRepository.findByOrderId(orderId);
     }
     
     public Shipping saveShipping(Shipping shipping) {
@@ -75,8 +73,6 @@ public class ShippingService {
     }
     
     public List<Shipping> getShippingsByStatus(String status) {
-        return shippingRepository.findAll().stream()
-                .filter(shipping -> status.equals(shipping.getShippingStatus()))
-                .toList();
+        return shippingRepository.findByShippingStatus(status);
     }
 }

@@ -42,9 +42,10 @@ public class ProductService {
     }
     
     public List<Products> getProductsByCategory(Long categoryId) {
-        Categories category = categoryRepository.findById(categoryId)
+        // Kiểm tra category có tồn tại không
+        categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-        return productRepository.findByCategory(category);
+        return productRepository.findByCategoryCategoryId(categoryId);
     }
     
     public List<Products> searchProducts(String keyword) {

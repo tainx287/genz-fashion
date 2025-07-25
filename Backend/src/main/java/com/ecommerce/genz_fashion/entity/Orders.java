@@ -49,7 +49,7 @@ public class Orders {
 	}
 
 	public Orders(Long orderId, Long userId, Long addressId, Date orderDate, Double subtotal, Double discountAmount,
-			Double shippingFee, Double totalAmount, String orderStatus, String paymentMethod, String paymentStatus,
+			Double shippingFee, Double totalAmount, OrderStatus orderStatus, PaymentMethod paymentMethod, PaymentStatus paymentStatus,
 			String voucherCode, String notes, Date cancelledAt, String cancelledReason) {
 		super();
 		this.orderId = orderId;

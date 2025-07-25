@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -96,6 +96,6 @@ public class ProductDto {
         private String sortBy = "name";
         private String sortDirection = "asc";
         private Integer page = 0;
-        private Integer size = 10;
+        private Integer pageSize = 10;
     }
 }

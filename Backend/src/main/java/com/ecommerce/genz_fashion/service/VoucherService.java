@@ -38,17 +38,12 @@ public class VoucherService {
     }
     
     public Optional<PublicVouchers> getPublicVoucherByCode(String code) {
-        return publicVoucherRepository.findAll().stream()
-                .filter(voucher -> code.equals(voucher.getCode()))
-                .findFirst();
+        return publicVoucherRepository.findByCode(code);
     }
     
     public List<PublicVouchers> getActivePublicVouchers() {
         Date now = new Date();
-        return publicVoucherRepository.findAll().stream()
-                .filter(voucher -> voucher.getIsActive() != null && voucher.getIsActive())
-                .filter(voucher -> voucher.getStartDate().before(now) && voucher.getEndDate().after(now))
-                .toList();
+        return publicVoucherRepository.findActiveAndAvailableVouchers(now);
     }
     
     // Member Voucher methods
@@ -61,17 +56,12 @@ public class VoucherService {
     }
     
     public Optional<MemberVouchers> getMemberVoucherByCode(String code) {
-        return memberVouchersRepository.findAll().stream()
-                .filter(voucher -> code.equals(voucher.getCode()))
-                .findFirst();
+        return memberVouchersRepository.findByCode(code);
     }
     
     public List<MemberVouchers> getActiveMemberVouchers() {
         Date now = new Date();
-        return memberVouchersRepository.findAll().stream()
-                .filter(voucher -> voucher.getIsActive() != null && voucher.getIsActive())
-                .filter(voucher -> voucher.getStartDate().before(now) && voucher.getEndDate().after(now))
-                .toList();
+        return memberVouchersRepository.findActiveVouchers(now);
     }
     
     // Voucher usage methods
@@ -102,11 +92,8 @@ public class VoucherService {
     
     private boolean validateMemberVoucher(MemberVouchers voucher, Long userId, Double orderAmount) {
         Date now = new Date();
-        long userUsageCount = userVoucherUsageRepository.findAll().stream()
-                .filter(usage -> usage.getUserId().equals(userId))
-                .filter(usage -> usage.getVoucherId().equals(voucher.getMemberVoucherId()))
-                .filter(usage -> "member".equals(usage.getVoucherType()))
-                .count();
+        long userUsageCount = userVoucherUsageRepository.countByUserIdAndVoucherTypeAndVoucherId(
+                userId, "member", voucher.getMemberVoucherId());
         
         return voucher.getIsActive() &&
                voucher.getStartDate().before(now) &&

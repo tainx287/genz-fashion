@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +24,15 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
     
-    public Cart getOrCreateCart(User user) {
-        Optional<Cart> existingCart = cartRepository.findByUser(user);
+    public Cart getOrCreateCart(Long userId) {
+        Optional<Cart> existingCart = cartRepository.findByUserId(userId);
         if (existingCart.isPresent()) {
             return existingCart.get();
         }
         
         Cart newCart = new Cart();
-        newCart.setUser(user);
+        newCart.setUserId(userId);
+        newCart.setCreatedAt(new Date());
         return cartRepository.save(newCart);
     }
     
@@ -46,20 +47,21 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         
         // Check if item already exists in cart
-        Optional<CartItems> existingItem = cartItemRepository.findByCartAndProduct(cart, product);
+        Optional<CartItems> existingItem = cartItemRepository.findByCartIdAndVariantId(cart.getCartId(), productId);
         
         if (existingItem.isPresent()) {
             CartItems item = existingItem.get();
             item.setQuantity(item.getQuantity() + quantity);
-            item.setTotalPrice(item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+            item.setTotalPrice(item.getUnitPrice() * item.getQuantity());
             return cartItemRepository.save(item);
         } else {
             CartItems newItem = new CartItems();
-            newItem.setCart(cart);
-            newItem.setProduct(product);
+            newItem.setCartId(cart.getCartId());
+            newItem.setVariantId(productId);
             newItem.setQuantity(quantity);
-            newItem.setUnitPrice(product.getPrice());
-            newItem.setTotalPrice(product.getPrice().multiply(BigDecimal.valueOf(quantity)));
+            newItem.setUnitPrice(product.getBasePrice());
+            newItem.setTotalPrice(product.getBasePrice() * quantity);
+            newItem.setAddedAt(new Date());
             return cartItemRepository.save(newItem);
         }
     }
@@ -74,7 +76,7 @@ public class CartService {
         }
         
         cartItem.setQuantity(quantity);
-        cartItem.setTotalPrice(cartItem.getUnitPrice().multiply(BigDecimal.valueOf(quantity)));
+        cartItem.setTotalPrice(cartItem.getUnitPrice() * quantity);
         return cartItemRepository.save(cartItem);
     }
     
@@ -86,19 +88,19 @@ public class CartService {
     
     public void clearCart(Long userId) {
         Cart cart = getCartByUserId(userId);
-        cartItemRepository.deleteByCart(cart);
+        cartItemRepository.deleteByCartId(cart.getCartId());
     }
     
     public List<CartItems> getCartItems(Long userId) {
         Cart cart = getCartByUserId(userId);
-        return cartItemRepository.findByCart(cart);
+        return cartItemRepository.findByCartId(cart.getCartId());
     }
     
-    public BigDecimal getCartTotal(Long userId) {
+    public Double getCartTotal(Long userId) {
         List<CartItems> cartItems = getCartItems(userId);
         return cartItems.stream()
                 .map(CartItems::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(0.0, Double::sum);
     }
     
     public int getCartItemCount(Long userId) {
@@ -110,8 +112,6 @@ public class CartService {
     
     public boolean isProductInCart(Long userId, Long productId) {
         Cart cart = getCartByUserId(userId);
-        Products product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        return cartItemRepository.findByCartAndProduct(cart, product).isPresent();
+        return cartItemRepository.findByCartIdAndVariantId(cart.getCartId(), productId).isPresent();
     }
 }

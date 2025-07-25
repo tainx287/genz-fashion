@@ -40,6 +40,9 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
+    
+    @Column(name = "address_id", insertable = false, updatable = false)
+    private Long addressId;
     @Temporal(TemporalType.DATE)
     @Column(name = "created_at")
     private Date createdAt;
@@ -200,6 +203,14 @@ public class User {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
     
     

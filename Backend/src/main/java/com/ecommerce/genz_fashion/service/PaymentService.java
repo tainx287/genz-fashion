@@ -27,9 +27,7 @@ public class PaymentService {
     }
     
     public List<Payments> getPaymentsByOrderId(Long orderId) {
-        return paymentRepository.findAll().stream()
-                .filter(payment -> payment.getOrderId().equals(orderId))
-                .toList();
+        return paymentRepository.findByOrderId(orderId);
     }
     
     public Payments savePayment(Payments payment) {
@@ -65,9 +63,7 @@ public class PaymentService {
     }
     
     public Double getTotalPaymentsByOrder(Long orderId) {
-        return getPaymentsByOrderId(orderId).stream()
-                .filter(payment -> "completed".equals(payment.getPaymentStatus()))
-                .mapToDouble(Payments::getAmount)
-                .sum();
+        Double total = paymentRepository.getTotalCompletedPaymentsByOrder(orderId);
+        return total != null ? total : 0.0;
     }
 }

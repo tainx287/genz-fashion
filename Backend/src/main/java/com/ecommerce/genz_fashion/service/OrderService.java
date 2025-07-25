@@ -70,7 +70,7 @@ public class OrderService {
         Orders order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         
-        order.setShippingAddress(orderDetails.getShippingAddress());
+        order.setAddressId(orderDetails.getAddressId());
         order.setNotes(orderDetails.getNotes());
         
         return orderRepository.save(order);
@@ -94,7 +94,7 @@ public class OrderService {
     public BigDecimal calculateOrderTotal(Long orderId) {
         List<OrderItems> orderItems = orderItemRepository.findByOrderId(orderId);
         return orderItems.stream()
-                .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .map(item -> BigDecimal.valueOf(item.getUnitPrice() * item.getQuantity()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
@@ -103,7 +103,14 @@ public class OrderService {
     }
     
     public List<Orders> getOrdersByDateRange(Date startDate, Date endDate) {
-        return orderRepository.findByOrderDateBetween(startDate, endDate);
+        // Convert Date to LocalDateTime for repository method compatibility
+        java.time.LocalDateTime startDateTime = startDate.toInstant()
+                .atZone(java.time.ZoneId.systemDefault())
+                .toLocalDateTime();
+        java.time.LocalDateTime endDateTime = endDate.toInstant()
+                .atZone(java.time.ZoneId.systemDefault())
+                .toLocalDateTime();
+        return orderRepository.findByOrderDateBetween(startDateTime, endDateTime);
     }
     
     public long getTotalOrdersCount() {

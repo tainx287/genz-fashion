@@ -13,17 +13,18 @@ public interface OrderItemRepository extends JpaRepository<OrderItems, Long> {
     
     List<OrderItems> findByOrderId(Long orderId);
     
-    List<OrderItems> findByProductId(Long productId);
+    List<OrderItems> findByVariantId(Long variantId);
     
-    @Query("SELECT oi FROM OrderItems oi WHERE oi.orderId IN (SELECT o.orderId FROM Orders o WHERE o.userId = :userId)")
-    List<OrderItems> findByUserId(@Param("userId") Long userId);
+    @Query("SELECT SUM(oi.quantity) FROM OrderItems oi WHERE oi.orderId = :orderId")
+    Integer getTotalQuantityByOrder(@Param("orderId") Long orderId);
     
-    @Query("SELECT oi.variantId, SUM(oi.quantity) as totalSold " +
-           "FROM OrderItems oi JOIN Orders o ON oi.orderId = o.orderId " +
-           "WHERE o.orderStatus = 'delivered' " +
-           "GROUP BY oi.variantId ORDER BY totalSold DESC")
-    List<Object[]> findBestSellingProducts();
+    @Query("SELECT SUM(oi.totalPrice) FROM OrderItems oi WHERE oi.orderId = :orderId")
+    Double getTotalPriceByOrder(@Param("orderId") Long orderId);
     
-    @Query("SELECT SUM(oi.quantity) FROM OrderItems oi WHERE oi.variantId = :variantId")
-    Long getTotalQuantitySoldByVariant(@Param("variantId") Long variantId);
+    @Query("SELECT oi FROM OrderItems oi WHERE oi.variantId = :variantId AND oi.orderId IN (SELECT o.orderId FROM Orders o WHERE o.orderStatus = 'delivered')")
+    List<OrderItems> findDeliveredItemsByVariant(@Param("variantId") Long variantId);
+    
+    long countByOrderId(Long orderId);
+    
+    long countByVariantId(Long variantId);
 }

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 
 @RestController
@@ -78,11 +78,11 @@ public class CartController {
     }
     
     @GetMapping("/total")
-    public ResponseEntity<BigDecimal> getCartTotal() {
+    public ResponseEntity<Double> getCartTotal() {
         try {
             User currentUser = authService.getCurrentUser()
                     .orElseThrow(() -> new RuntimeException("User not found"));
-            BigDecimal total = cartService.getCartTotal(currentUser.getUserId());
+            Double total = cartService.getCartTotal(currentUser.getUserId());
             return ResponseEntity.ok(total);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

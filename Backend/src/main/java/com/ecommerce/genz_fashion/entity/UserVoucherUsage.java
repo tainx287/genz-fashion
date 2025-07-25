@@ -17,6 +17,7 @@ public class UserVoucherUsage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long usageId;
     private Long userId;
+    private String voucherType;
     private Long voucherId;
     private Integer pointsSpent;
     @Temporal(TemporalType.DATE)
@@ -27,10 +28,11 @@ public class UserVoucherUsage {
 		super();
 	}
 
-	public UserVoucherUsage(Long usageId, Long userId, Long voucherId, Integer pointsSpent, Date usedAt, Long orderId) {
+	public UserVoucherUsage(Long usageId, Long userId, String voucherType, Long voucherId, Integer pointsSpent, Date usedAt, Long orderId) {
 		super();
 		this.usageId = usageId;
 		this.userId = userId;
+		this.voucherType = voucherType;
 		this.voucherId = voucherId;
 		this.pointsSpent = pointsSpent;
 		this.usedAt = usedAt;
@@ -51,6 +53,14 @@ public class UserVoucherUsage {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getVoucherType() {
+		return voucherType;
+	}
+
+	public void setVoucherType(String voucherType) {
+		this.voucherType = voucherType;
 	}
 
 	public Long getVoucherId() {

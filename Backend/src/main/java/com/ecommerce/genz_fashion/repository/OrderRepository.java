@@ -18,24 +18,26 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
     
     List<Orders> findByUserIdOrderByOrderDateDesc(Long userId);
     
-    List<Orders> findByOrderStatus(Orders.OrderStatus status);
+    List<Orders> findByOrderStatus(Orders.OrderStatus orderStatus);
     
-    List<Orders> findByOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    @Query("SELECT o FROM Orders o WHERE o.orderDate BETWEEN :startDate AND :endDate")
+    List<Orders> findByOrderDateBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     
     @Query("SELECT o FROM Orders o ORDER BY o.orderDate DESC LIMIT :limit")
     List<Orders> findTopNByOrderByOrderDateDesc(@Param("limit") int limit);
     
-    @Query("SELECT SUM(o.totalAmount) FROM Orders o WHERE o.orderStatus = 'DELIVERED'")
+    @Query("SELECT SUM(o.totalAmount) FROM Orders o WHERE o.orderStatus = 'delivered'")
     BigDecimal calculateTotalRevenue();
     
-    @Query("SELECT COUNT(o) FROM Orders o WHERE o.orderStatus = :status")
-    long countByOrderStatus(@Param("status") Orders.OrderStatus status);
+    List<Orders> findByPaymentStatus(Orders.PaymentStatus paymentStatus);
     
-    @Query("SELECT o FROM Orders o WHERE o.user.userId = :userId AND o.orderStatus = :status")
-    List<Orders> findByUserIdAndOrderStatus(@Param("userId") Long userId, @Param("status") Orders.OrderStatus status);
+    List<Orders> findByPaymentMethod(Orders.PaymentMethod paymentMethod);
     
-    @Query("SELECT EXTRACT(MONTH FROM o.orderDate) as month, SUM(o.totalAmount) as revenue " +
-           "FROM Orders o WHERE EXTRACT(YEAR FROM o.orderDate) = :year AND o.orderStatus = 'DELIVERED' " +
-           "GROUP BY EXTRACT(MONTH FROM o.orderDate) ORDER BY month")
-    List<Object[]> getMonthlyRevenue(@Param("year") int year);
+    @Query("SELECT o FROM Orders o WHERE o.voucherCode = :voucherCode")
+    List<Orders> findByVoucherCode(@Param("voucherCode") String voucherCode);
+    
+    long countByOrderStatus(Orders.OrderStatus orderStatus);
+    
+    @Query("SELECT COUNT(o) FROM Orders o WHERE o.userId = :userId")
+    long countByUserId(@Param("userId") Long userId);
 }

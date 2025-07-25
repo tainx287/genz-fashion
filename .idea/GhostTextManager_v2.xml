@@ -15,6 +15,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="ShippingService lỗi">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753400677622" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="bổ sung hết toàn bộ code trong các file /folder còn thiếu">
           <value>
             <GhostTextMetaData>
@@ -87,6 +99,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="chạy thử dự án với post man">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753368353826" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="chạy thử ra dữ liệu với postman">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753369151738" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="chạy được chưa">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753370071294" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="chạy được thì thông báo, nếu không cứ tiếp tục sửa lỗi cho đến khi kết nối dữ liệu được thì báo">
           <value>
             <GhostTextMetaData>
@@ -94,6 +142,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1753346372200" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="controller ở dự án này đã làm những gì, chúng đã tương tác với các file nào?">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753416051042" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -154,6 +214,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1753361277124" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="fixbug CategoryService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753411649939" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -267,6 +339,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="kiểm tra pom.xml">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753399447676" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="kiểm tra và sửa lỗi ở category trong repository và service">
           <value>
             <GhostTextMetaData>
@@ -327,6 +411,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="lỗi User.java">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753401177866" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="lỗi ở UserService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753401103551" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="lỗi ở VoucherService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753400906215" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="mvn không chạy dự án mà ra một trang trắng tinh">
           <value>
             <GhostTextMetaData>
@@ -339,6 +459,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="mvn trắng tinh tại sao biên dịch lại ra trang trắng:  @&lt;file_name&gt;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753413100722" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="phân tích tác dụng của file / folder mvn">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753370388628" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="service bị lỗi">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753368773834" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="service đã chạy những chức năng nào, đã liên kết với repository chưa, entity ánh xạ từ bảng cơ sở dữ liệu nào, đã khớp hết hay chưa">
           <value>
             <GhostTextMetaData>
@@ -346,6 +502,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1753366640460" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa CartController">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753403140382" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -375,6 +543,67 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="sửa lỗi  CartServive">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753411329582" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi : ColorService, InventortService, OrderService, ProductVariantsService, SizesService,UserService, WishlistSerivce.. sau đó giải thích về những thay đổi.">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="2.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753412480919" />
+                  <option value="1753412165572" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi AuthService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753402665407" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi cartService">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753402832273" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi trong ProductDto">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753399836898" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="sửa lỗi trên trang này">
           <value>
             <GhostTextMetaData>
@@ -399,6 +628,42 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="sửa lỗi ở ActivityLogService.java">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753399953984" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi ở PaymentService và cho biết tại sao nó lỗi">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753400476344" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi ở ProductController">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753412740299" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="sửa lỗi ở UserRepository và cho biết tại sao lại có lỗi này">
           <value>
             <GhostTextMetaData>
@@ -406,6 +671,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1752739195350" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="sửa lỗi ở các file trong Service">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753400552145" />
                 </list>
               </option>
             </GhostTextMetaData>
@@ -447,6 +724,18 @@
             </GhostTextMetaData>
           </value>
         </entry>
+        <entry key="tìm và sửa các lỗi tương tự như ở InventorySerivce ảnh hưởng đến việc run file main ở GenZFashionApplication">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753400278338" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
         <entry key="tóm gọn lại các chức năng và luồng hoạt động của dự án này">
           <value>
             <GhostTextMetaData>
@@ -466,6 +755,18 @@
               <option name="timestamps">
                 <list>
                   <option value="1753366324214" />
+                </list>
+              </option>
+            </GhostTextMetaData>
+          </value>
+        </entry>
+        <entry key="tại sao entity Order.java lại lỗi ở: this.orderStatus = orderStatus;&#10;&#9;&#9;this.paymentMethod = paymentMethod;&#10;&#9;&#9;this.paymentStatus = paymentStatus;">
+          <value>
+            <GhostTextMetaData>
+              <option name="count" value="1.0" />
+              <option name="timestamps">
+                <list>
+                  <option value="1753412601311" />
                 </list>
               </option>
             </GhostTextMetaData>

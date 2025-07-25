@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,42 +26,42 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
     
-    public List<Review> getReviewsByProduct(Long productId) {
+    public List<Reviews> getReviewsByProduct(Long productId) {
         return reviewRepository.findByProductIdOrderByCreatedAtDesc(productId);
     }
     
-    public List<Review> getReviewsByUser(Long userId) {
+    public List<Reviews> getReviewsByUser(Long userId) {
         return reviewRepository.findByUserId(userId);
     }
     
-    public List<Review> getReviewsByRating(Integer rating) {
+    public List<Reviews> getReviewsByRating(Integer rating) {
         return reviewRepository.findByRating(rating);
     }
     
-    public Review createReview(Review review) {
+    public Reviews createReview(Reviews review) {
         // Check if user already reviewed this product
-        if (reviewRepository.existsByUserIdAndProductId(review.getUser().getUserId(), 
-                review.getProduct().getProductId())) {
+        if (reviewRepository.existsByUserIdAndProductId(review.getUserId(), 
+                review.getProductId())) {
             throw new RuntimeException("User has already reviewed this product");
         }
         
-        review.setCreatedAt(LocalDateTime.now());
+        review.setCreatedAt(new Date());
         return reviewRepository.save(review);
     }
     
-    public Review updateReview(Long id, Review reviewDetails) {
-        Review review = reviewRepository.findById(id)
+    public Reviews updateReview(Long id, Reviews reviewDetails) {
+        Reviews review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
         
         review.setRating(reviewDetails.getRating());
         review.setComment(reviewDetails.getComment());
-        review.setUpdatedAt(LocalDateTime.now());
+        review.setUpdatedAt(new Date());
         
         return reviewRepository.save(review);
     }
     
     public void deleteReview(Long id) {
-        Review review = reviewRepository.findById(id)
+        Reviews review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
         reviewRepository.delete(review);
     }

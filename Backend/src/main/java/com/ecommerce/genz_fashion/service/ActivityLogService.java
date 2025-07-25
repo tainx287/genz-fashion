@@ -33,21 +33,15 @@ public class ActivityLogService {
     }
     
     public List<ActivityLogs> getActivityLogsByUserId(Long userId) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> log.getChangedBy() != null && log.getChangedBy().equals(userId))
-                .toList();
+        return activityLogsRepository.findByChangedBy(userId);
     }
     
     public List<ActivityLogs> getActivityLogsByTableName(String tableName) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> tableName.equals(log.getTableName()))
-                .toList();
+        return activityLogsRepository.findByTableName(tableName);
     }
     
     public List<ActivityLogs> getActivityLogsByActionType(String actionType) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> actionType.equals(log.getActionType()))
-                .toList();
+        return activityLogsRepository.findByActionType(actionType);
     }
     
     public ActivityLogs saveActivityLog(ActivityLogs activityLog) {
@@ -102,44 +96,29 @@ public class ActivityLogService {
     }
     
     public List<ActivityLogs> getRecentActivities(int limit) {
-        return activityLogsRepository.findAll().stream()
-                .sorted((a, b) -> b.getChangedAt().compareTo(a.getChangedAt()))
+        return activityLogsRepository.findAllOrderByChangedAtDesc().stream()
                 .limit(limit)
                 .toList();
     }
     
     public List<ActivityLogs> getActivitiesByDateRange(Date startDate, Date endDate) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> log.getChangedAt().after(startDate) && log.getChangedAt().before(endDate))
-                .toList();
+        return activityLogsRepository.findByChangedAtBetween(startDate, endDate);
     }
     
     public List<ActivityLogs> getUserActivitiesInDateRange(Long userId, Date startDate, Date endDate) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> log.getChangedBy() != null && log.getChangedBy().equals(userId))
-                .filter(log -> log.getChangedAt().after(startDate) && log.getChangedAt().before(endDate))
-                .toList();
+        return activityLogsRepository.findByChangedByAndChangedAtBetween(userId, startDate, endDate);
     }
     
     public long getActivityCountByUser(Long userId) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> log.getChangedBy() != null && log.getChangedBy().equals(userId))
-                .count();
+        return activityLogsRepository.countByChangedBy(userId);
     }
     
     public long getActivityCountByTable(String tableName) {
-        return activityLogsRepository.findAll().stream()
-                .filter(log -> tableName.equals(log.getTableName()))
-                .count();
+        return activityLogsRepository.countByTableName(tableName);
     }
     
     public void cleanupOldLogs(Date beforeDate) {
-        List<ActivityLogs> oldLogs = activityLogsRepository.findAll().stream()
-                .filter(log -> log.getChangedAt().before(beforeDate))
-                .toList();
-        
-        for (ActivityLogs log : oldLogs) {
-            activityLogsRepository.delete(log);
-        }
+        List<ActivityLogs> oldLogs = activityLogsRepository.findByChangedAtBefore(beforeDate);
+        activityLogsRepository.deleteAll(oldLogs);
     }
 }

@@ -66,7 +66,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setPhone(registerRequest.getPhone());
-        user.setRole(User.Role.CUSTOMER);
+        user.setRole(User.Role.customer);
         user.setIsActive(true);
         user.setCreatedAt(LocalDateTime.now());
         

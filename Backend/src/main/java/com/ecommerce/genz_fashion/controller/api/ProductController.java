@@ -111,14 +111,5 @@ public class ProductController {
         }
     }
     
-    @PutMapping("/{id}/stock")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<?> updateStock(@PathVariable Long id, @RequestParam Integer quantity) {
-        try {
-            productService.updateStock(id, quantity);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+
 }

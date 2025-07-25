@@ -30,11 +30,13 @@ public class CategoryService {
     }
     
     public List<Categories> getParentCategories() {
-        return categoryRepository.findByParentIdIsNull();
+        return categoryRepository.findByParentIsNull();
     }
     
     public List<Categories> getSubCategories(Long parentId) {
-        return categoryRepository.findByParentId(parentId);
+        Categories parent = categoryRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("Parent category not found"));
+        return categoryRepository.findByParent(parent);
     }
     
     public Categories createCategory(Categories category) {
@@ -49,7 +51,7 @@ public class CategoryService {
         
         category.setName(categoryDetails.getName());
         category.setDescription(categoryDetails.getDescription());
-        category.setParentId(categoryDetails.getParentId());
+        category.setParent(categoryDetails.getParent());
         
         return categoryRepository.save(category);
     }
@@ -59,8 +61,7 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         
         // Check if category has subcategories
-        List<Categories> subCategories = categoryRepository.findByParentId(id);
-        if (!subCategories.isEmpty()) {
+        if (!category.getChildren().isEmpty()) {
             throw new RuntimeException("Cannot delete category with subcategories");
         }
         
