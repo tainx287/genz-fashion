@@ -1,48 +1,64 @@
-# Compiled class file
+# ========================================
+# 💡 Java / Maven build
+# ========================================
+/target/
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
-*.nar
 *.ear
+
+# ========================================
+# 💡 IDE config
+# ========================================
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# VSCode
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ========================================
+# 💡 Logs, system files
+# ========================================
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Crash logs
+hs_err_pid*
+replay_pid*
+
+# ========================================
+# 💡 OS-specific
+# ========================================
+.DS_Store
+Thumbs.db
+
+# ========================================
+# 💡 Archive files
+# ========================================
 *.zip
 *.tar.gz
 *.rar
+*.7z
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
-<?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-</module>
-
-<?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="true" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-</module>
-.idea/**/*
+# ========================================
+# 💡 Others (nếu có J2ME hoặc BlueJ)
+# ========================================
+*.ctxt
+.mtj.tmp/
