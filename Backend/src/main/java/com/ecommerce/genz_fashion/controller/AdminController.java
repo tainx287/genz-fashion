@@ -19,16 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class AdminController {
 
-    // Lưu ý: Các service này cần được tạo và triển khai
     private final ProductService productService;
     private final UserService userService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        // Gợi ý: Nên có các phương thức count() riêng trong service để hiệu quả hơn
         model.addAttribute("totalProducts", productService.countAllProducts());
         model.addAttribute("totalUsers", userService.countAllUsers());
-        return "admin/dashboard"; // Trả về view template
+        return "admin/dashboard";
     }
 
     @GetMapping("/products")
@@ -36,11 +34,8 @@ public class AdminController {
                                  @RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        // Lưu ý: Cần tạo model Product và phương thức getProductsWithPagination trong service
         Page<Product> productPage = productService.getProductsWithPagination(pageable);
         model.addAttribute("productPage", productPage);
         return "admin/products";
     }
-
-    // Tương tự, bạn cần tạo các phương thức và model cho Users, Orders, v.v.
 }
