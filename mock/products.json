@@ -1,0 +1,35 @@
+{
+  "contactInfo": {
+    "email": "customer@example.com",
+    "phone": "0987654321"
+  },
+  "shippingAddress": {
+    "firstName": "An",
+    "lastName": "Nguyen Van",
+    "country": "Vietnam",
+    "state": "Ho Chi Minh City",
+    "address": "123 Đường ABC, Quận 1"
+  },
+  "paymentMethod": "cash",
+  "items": [
+    {
+      "productId": "prod001",
+      "name": "Basic Heavy T Shirt",
+      "variant": "Black/L",
+      "quantity": 1,
+      "price": 99
+    },
+    {
+      "productId": "prod002",
+      "name": "Basic Fit T Shirt",
+      "variant": "Black/L",
+      "quantity": 1,
+      "price": 99
+    }
+  ],
+  "summary": {
+    "subtotal": 198.00,
+    "voucher": 10.00,
+    "total": 188.00
+  }
+}
