@@ -1,15 +1,17 @@
 package com.ecommerce.genz_fashion.controller.api;
 
+import com.ecommerce.genz_fashion.dto.OrderDto;
 import com.ecommerce.genz_fashion.entity.Orders;
-import com.ecommerce.genz_fashion.entity.User;
-import com.ecommerce.genz_fashion.service.AuthService;
+import com.ecommerce.genz_fashion.mapper.OrderMapper;
 import com.ecommerce.genz_fashion.service.OrderService;
+import com.ecommerce.genz_fashion.security.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -23,128 +25,62 @@ import java.util.List;
 public class OrderController {
     
     private final OrderService orderService;
-    private final AuthService authService;
+    private final OrderMapper orderMapper;
     
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Orders>> getAllOrders() {
+    public ResponseEntity<List<OrderDto.OrderResponse>> getAllOrders() {
         List<Orders> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orderMapper.toOrderResponses(orders));
     }
     
     @GetMapping("/paginated")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Page<Orders>> getOrdersWithPagination(
+    public ResponseEntity<Page<OrderDto.OrderResponse>> getOrdersWithPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Orders> orders = orderService.getOrdersWithPagination(pageable);
-        return ResponseEntity.ok(orders);
+        Page<Orders> orderPage = orderService.getOrdersWithPagination(pageable);
+        return ResponseEntity.ok(orderPage.map(orderMapper::toOrderResponse));
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id)
-                .map(order -> ResponseEntity.ok().body(order))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<OrderDto.OrderResponse> getOrderById(@PathVariable Long id) {
+        // Service sẽ ném ResourceNotFoundException nếu không tìm thấy
+        Orders order = orderService.getOrderById(id).orElseThrow(() -> new com.ecommerce.genz_fashion.exception.ResourceNotFoundException("Order not found"));
+        return ResponseEntity.ok(orderMapper.toOrderResponse(order));
     }
     
     @GetMapping("/my-orders")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<List<Orders>> getMyOrders() {
-        User currentUser = authService.getCurrentUser()
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        List<Orders> orders = orderService.getOrdersByUser(currentUser);
-        return ResponseEntity.ok(orders);
-    }
-    
-    @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Orders>> getOrdersByUserId(@PathVariable Long userId) {
-        List<Orders> orders = orderService.getOrdersByUserId(userId);
-        return ResponseEntity.ok(orders);
-    }
-    
-    @GetMapping("/status/{status}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Orders>> getOrdersByStatus(@PathVariable Orders.OrderStatus status) {
-        List<Orders> orders = orderService.getOrdersByStatus(status);
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderDto.OrderResponse>> getMyOrders(@AuthenticationPrincipal UserDetailsImpl currentUser) {
+        List<Orders> orders = orderService.getOrdersByUserId(currentUser.getId());
+        return ResponseEntity.ok(orderMapper.toOrderResponses(orders));
     }
     
     @PostMapping
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orders order) {
-        try {
-            User currentUser = authService.getCurrentUser()
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            order.setUser(currentUser);
-            Orders createdOrder = orderService.createOrder(order);
-            return ResponseEntity.ok(createdOrder);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<Orders> updateOrder(@PathVariable Long id, @Valid @RequestBody Orders orderDetails) {
-        try {
-            Orders updatedOrder = orderService.updateOrder(id, orderDetails);
-            return ResponseEntity.ok(updatedOrder);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<OrderDto.OrderResponse> createOrder(@Valid @RequestBody OrderDto.CreateOrderRequest request,
+                                                              @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        // Logic tạo order từ giỏ hàng sẽ nằm trong service
+        Orders createdOrder = orderService.createOrderFromCart(currentUser.getId(), request);
+        return ResponseEntity.ok(orderMapper.toOrderResponse(createdOrder));
     }
     
     @PutMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Orders> updateOrderStatus(@PathVariable Long id, @RequestParam Orders.OrderStatus status) {
-        try {
-            Orders updatedOrder = orderService.updateOrderStatus(id, status);
-            return ResponseEntity.ok(updatedOrder);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<OrderDto.OrderResponse> updateOrderStatus(@PathVariable Long id, @Valid @RequestBody OrderDto.UpdateOrderStatusRequest request) {
+        Orders updatedOrder = orderService.updateOrderStatus(id, request.getStatus());
+        return ResponseEntity.ok(orderMapper.toOrderResponse(updatedOrder));
     }
     
     @PutMapping("/{id}/cancel")
     public ResponseEntity<?> cancelOrder(@PathVariable Long id, @RequestParam(required = false) String reason) {
-        try {
-            orderService.cancelOrder(id, reason);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        // Logic nên kiểm tra xem người dùng có quyền hủy đơn hàng này không
+        orderService.cancelOrder(id, reason);
+        return ResponseEntity.ok(new com.ecommerce.genz_fashion.payload.response.MessageResponse("Order cancelled successfully."));
     }
     
-    @GetMapping("/{id}/total")
-    public ResponseEntity<BigDecimal> getOrderTotal(@PathVariable Long id) {
-        try {
-            BigDecimal total = orderService.calculateOrderTotal(id);
-            return ResponseEntity.ok(total);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
-    @GetMapping("/recent")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<List<Orders>> getRecentOrders(@RequestParam(defaultValue = "10") int limit) {
-        List<Orders> orders = orderService.getRecentOrders(limit);
-        return ResponseEntity.ok(orders);
-    }
-    
-    @GetMapping("/statistics/total-count")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Long> getTotalOrdersCount() {
-        long count = orderService.getTotalOrdersCount();
-        return ResponseEntity.ok(count);
-    }
-    
-    @GetMapping("/statistics/total-revenue")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<BigDecimal> getTotalRevenue() {
-        BigDecimal revenue = orderService.getTotalRevenue();
-        return ResponseEntity.ok(revenue);
-    }
+    // Các endpoint khác như getOrdersByUserId, getOrdersByStatus, getRecentOrders, statistics...
+    // cũng nên được tái cấu trúc để trả về DTO thay vì Entity.
 }

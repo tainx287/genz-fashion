@@ -1,6 +1,8 @@
 package com.ecommerce.genz_fashion.service;
 
 import com.ecommerce.genz_fashion.dto.AuthDto;
+import com.ecommerce.genz_fashion.exception.BadRequestException;
+import com.ecommerce.genz_fashion.exception.DuplicateResourceException;
 import com.ecommerce.genz_fashion.entity.User;
 import com.ecommerce.genz_fashion.repository.UserRepository;
 import com.ecommerce.genz_fashion.util.JwtUtils;
@@ -53,11 +55,11 @@ public class AuthService {
     
     public AuthDto.RegisterResponse register(AuthDto.RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            throw new RuntimeException("Username is already taken!");
+            throw new DuplicateResourceException("Username is already taken!");
         }
         
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            throw new RuntimeException("Email is already in use!");
+            throw new DuplicateResourceException("Email is already in use!");
         }
         
         User user = new User();
@@ -104,21 +106,20 @@ public class AuthService {
     
     public boolean changePassword(String username, String oldPassword, String newPassword) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
         
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            return false;
+            throw new BadRequestException("Invalid old password");
         }
         
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
-        return true;
     }
     
     public void resetPassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
         
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setUpdatedAt(LocalDateTime.now());

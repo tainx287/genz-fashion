@@ -3,6 +3,7 @@ package com.ecommerce.genz_fashion.service;
 import com.ecommerce.genz_fashion.entity.Orders;
 import com.ecommerce.genz_fashion.entity.OrderItems;
 import com.ecommerce.genz_fashion.entity.User;
+import com.ecommerce.genz_fashion.exception.ResourceNotFoundException;
 import com.ecommerce.genz_fashion.repository.OrderRepository;
 import com.ecommerce.genz_fashion.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +57,7 @@ public class OrderService {
     
     public Orders updateOrderStatus(Long orderId, Orders.OrderStatus status) {
         Orders order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
         
         order.setOrderStatus(status);
         if (status == Orders.OrderStatus.cancelled) {
@@ -68,7 +69,7 @@ public class OrderService {
     
     public Orders updateOrder(Long id, Orders orderDetails) {
         Orders order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
         
         order.setAddressId(orderDetails.getAddressId());
         order.setNotes(orderDetails.getNotes());
@@ -78,7 +79,7 @@ public class OrderService {
     
     public void cancelOrder(Long orderId, String reason) {
         Orders order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
         
         if (order.getOrderStatus() == Orders.OrderStatus.delivered) {
             throw new RuntimeException("Cannot cancel delivered order");

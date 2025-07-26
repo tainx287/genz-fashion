@@ -1,7 +1,9 @@
 package com.ecommerce.genz_fashion.controller.api;
 
+import com.ecommerce.genz_fashion.dto.ProductDto;
 import com.ecommerce.genz_fashion.entity.Products;
-import com.ecommerce.genz_fashion.service.ProductService;
+import com.ecommerce.genz_fashion.mapper.ProductMapper;
+import com.ecommerce.genz_fashion.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,95 +23,75 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductController {
     
-    private final ProductService productService;
+    private final IProductService productService;
+    private final ProductMapper productMapper; // Inject mapper
     
     @GetMapping
-    public ResponseEntity<List<Products>> getAllProducts() {
+    public ResponseEntity<List<ProductDto.ProductResponse>> getAllProducts() {
         List<Products> products = productService.getActiveProducts();
-        return ResponseEntity.ok(products);
+        List<ProductDto.ProductResponse> productDTOs = productMapper.toProductDTOs(products);
+        return ResponseEntity.ok(productDTOs);
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Products> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(product -> ResponseEntity.ok().body(product))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ProductDto.ProductResponse> getProductById(@PathVariable Long id) {
+        Products product = productService.getProductById(id);
+        ProductDto.ProductResponse productDTO = productMapper.toProductDTO(product);
+        return ResponseEntity.ok(productDTO);
     }
     
     @GetMapping("/featured")
-    public ResponseEntity<List<Products>> getFeaturedProducts() {
+    public ResponseEntity<List<ProductDto.ProductResponse>> getFeaturedProducts() {
         List<Products> products = productService.getFeaturedProducts();
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(productMapper.toProductDTOs(products));
     }
     
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<Products>> getProductsByCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<List<ProductDto.ProductResponse>> getProductsByCategory(@PathVariable Long categoryId) {
         List<Products> products = productService.getProductsByCategory(categoryId);
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(productMapper.toProductDTOs(products));
     }
     
     @GetMapping("/search")
-    public ResponseEntity<Page<Products>> searchProducts(
-            @RequestParam String keyword,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir) {
-        
-        Sort sort = sortDir.equalsIgnoreCase("desc") ? 
-                Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        
-        Page<Products> products = productService.searchProductsWithPagination(keyword, pageable);
-        return ResponseEntity.ok(products);
+    public ResponseEntity<Page<ProductDto.ProductResponse>> searchProducts(@Valid @ModelAttribute ProductDto.ProductSearchRequest request) {
+        Page<Products> productPage = productService.searchProducts(request);
+        Page<ProductDto.ProductResponse> productDTOPage = productPage.map(productMapper::toProductDTO);
+        return ResponseEntity.ok(productDTOPage);
     }
     
     @GetMapping("/price-range")
-    public ResponseEntity<List<Products>> getProductsByPriceRange(
+    public ResponseEntity<List<ProductDto.ProductResponse>> getProductsByPriceRange(
             @RequestParam BigDecimal minPrice,
             @RequestParam BigDecimal maxPrice) {
         List<Products> products = productService.getProductsByPriceRange(minPrice, maxPrice);
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(productMapper.toProductDTOs(products));
     }
     
     @GetMapping("/in-stock")
-    public ResponseEntity<List<Products>> getInStockProducts() {
+    public ResponseEntity<List<ProductDto.ProductResponse>> getInStockProducts() {
         List<Products> products = productService.getInStockProducts();
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(productMapper.toProductDTOs(products));
     }
     
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Products> createProduct(@Valid @RequestBody Products product) {
-        try {
-            Products createdProduct = productService.createProduct(product);
-            return ResponseEntity.ok(createdProduct);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<ProductDto.ProductResponse> createProduct(@Valid @RequestBody ProductDto.CreateProductRequest request) {
+        Products createdProduct = productService.createProduct(request);
+        return ResponseEntity.ok(productMapper.toProductDTO(createdProduct));
     }
     
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
-    public ResponseEntity<Products> updateProduct(@PathVariable Long id, @Valid @RequestBody Products productDetails) {
-        try {
-            Products updatedProduct = productService.updateProduct(id, productDetails);
-            return ResponseEntity.ok(updatedProduct);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ProductDto.ProductResponse> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto.UpdateProductRequest request) {
+        Products updatedProduct = productService.updateProduct(id, request);
+        return ResponseEntity.ok(productMapper.toProductDTO(updatedProduct));
     }
     
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        try {
-            productService.deleteProduct(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
-    
 
 }

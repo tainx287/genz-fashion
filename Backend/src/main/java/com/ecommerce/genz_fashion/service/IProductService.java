@@ -12,7 +12,7 @@ public interface IProductService {
     List<Products> getActiveProducts();
     List<Products> getFeaturedProducts();
     List<Products> getProductsByCategory(Long categoryId);
-    Page<Products> searchProductsWithPagination(String keyword, Pageable pageable);
+    Page<Products> searchProducts(ProductDto.ProductSearchRequest request);
     List<Products> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
     List<Products> getInStockProducts();
     Products getProductById(Long id);

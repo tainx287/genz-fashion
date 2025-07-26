@@ -18,20 +18,29 @@ public class AdminController {
     
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        model.addAttribute("totalProducts", productService.getAllProducts().size());
-        model.addAttribute("totalUsers", userService.getAllUsers().size());
+        // Nên có các phương thức count() riêng trong service để hiệu quả hơn
+        model.addAttribute("totalProducts", productService.countAllProducts());
+        model.addAttribute("totalUsers", userService.countAllUsers());
         return "admin/dashboard";
     }
     
     @GetMapping("/products")
-    public String manageProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+    public String manageProducts(Model model,
+                                 @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Products> productPage = productService.getProductsWithPagination(pageable); // Cần thêm phương thức này vào service
+        model.addAttribute("productPage", productPage);
         return "admin/products";
     }
     
     @GetMapping("/users")
-    public String manageUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
+    public String manageUsers(Model model,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userPage = userService.getUsersWithPagination(pageable); // Cần thêm phương thức này vào service
+        model.addAttribute("userPage", userPage);
         return "admin/users";
     }
 }

@@ -1,41 +1,34 @@
+    // Database connection test
 package com.ecommerce.genz_fashion;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 
 @SpringBootApplication
-public class DatabaseConnectionTest {
-
+public class GenzFashionApplication
+{
     public static void main(String[] args) {
-        SpringApplication.run(DatabaseConnectionTest.class, args);
+        SpringApplication.run(GenzFashionApplication.class, args);
     }
 
-    @Component
-    public static class DatabaseTestRunner implements CommandLineRunner {
-
-        @Autowired
-        private DataSource dataSource;
-
-        @Override
-        public void run(String... args) throws Exception {
+    @Bean
+    public CommandLineRunner databaseConnectionTest(DataSource dataSource) {
+        return args -> {
+            System.out.println("==================================================");
+            System.out.println("CHECKING DATABASE CONNECTION...");
             try (Connection connection = dataSource.getConnection()) {
                 if (connection != null && !connection.isClosed()) {
-                    System.out.println("đã kết nối thành công với CSDL GenZFashion");
-                    System.out.println("Database URL: " + connection.getMetaData().getURL());
-                    System.out.println("Database Product: " + connection.getMetaData().getDatabaseProductName());
-                } else {
-                    System.out.println("Không thể kết nối với CSDL GenZFashion");
+                    System.out.println("✅ Successfully connected to the database!");
+                    System.out.println("   Database URL: " + connection.getMetaData().getURL());
                 }
             } catch (Exception e) {
-                System.out.println("Lỗi kết nối CSDL: " + e.getMessage());
-                e.printStackTrace();
+                System.err.println("❌ DATABASE CONNECTION ERROR: " + e.getMessage());
             }
-        }
+            System.out.println("==================================================");
+        };
     }
 }

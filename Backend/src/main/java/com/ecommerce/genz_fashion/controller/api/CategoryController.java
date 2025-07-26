@@ -2,6 +2,7 @@ package com.ecommerce.genz_fashion.controller.api;
 
 import com.ecommerce.genz_fashion.entity.Categories;
 import com.ecommerce.genz_fashion.service.CategoryService;
+import com.ecommerce.genz_fashion.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,8 +28,8 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<Categories> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id)
-                .map(category -> ResponseEntity.ok().body(category))
-                .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
     }
     
     @GetMapping("/parent")
@@ -52,33 +53,23 @@ public class CategoryController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
     public ResponseEntity<Categories> createCategory(@Valid @RequestBody Categories category) {
-        try {
-            Categories createdCategory = categoryService.createCategory(category);
-            return ResponseEntity.ok(createdCategory);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Categories createdCategory = categoryService.createCategory(category);
+        return ResponseEntity.ok(createdCategory);
     }
     
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
     public ResponseEntity<Categories> updateCategory(@PathVariable Long id, @Valid @RequestBody Categories categoryDetails) {
-        try {
-            Categories updatedCategory = categoryService.updateCategory(id, categoryDetails);
-            return ResponseEntity.ok(updatedCategory);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        // Service của bạn nên throw ResourceNotFoundException nếu không tìm thấy category
+        Categories updatedCategory = categoryService.updateCategory(id, categoryDetails);
+        return ResponseEntity.ok(updatedCategory);
     }
     
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        try {
-            categoryService.deleteCategory(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        // Service của bạn nên throw exception nếu có lỗi
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content là lựa chọn tốt hơn cho việc xóa thành công
     }
 }

@@ -1,99 +1,117 @@
 package com.ecommerce.genz_fashion.service;
 
-import com.ecommerce.genz_fashion.entity.Products;
+import com.ecommerce.genz_fashion.dto.ProductDto;
 import com.ecommerce.genz_fashion.entity.Categories;
-import com.ecommerce.genz_fashion.entity.Brands;
+import com.ecommerce.genz_fashion.entity.Products;
+import com.ecommerce.genz_fashion.exception.DuplicateResourceException;
+import com.ecommerce.genz_fashion.exception.ResourceNotFoundException;
 import com.ecommerce.genz_fashion.repository.ProductRepository;
 import com.ecommerce.genz_fashion.repository.CategoryRepository;
-import com.ecommerce.genz_fashion.repository.BrandsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
-public class ProductService {
-    
+public class ProductService implements IProductService {
+
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
-    private final BrandsRepository brandsRepository;
-    
-    public List<Products> getAllProducts() {
-        return productRepository.findAll();
-    }
-    
+    private final CategoryRepository categoryRepository; // Thêm dependency này
+
+    // Các phương thức GET không thay đổi logic cốt lõi
     public List<Products> getActiveProducts() {
-        return productRepository.findByIsActiveTrue();
+        return productRepository.findByIsActiveTrue(); // Giả sử có phương thức này
     }
-    
-    public Optional<Products> getProductById(Long id) {
-        return productRepository.findById(id);
-    }
-    
+
     public List<Products> getFeaturedProducts() {
-        return productRepository.findByIsFeaturedTrue();
+        return productRepository.findByIsFeaturedTrueAndIsActiveTrue(); // Giả sử
     }
-    
+
     public List<Products> getProductsByCategory(Long categoryId) {
-        // Kiểm tra category có tồn tại không
-        categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        return productRepository.findByCategoryCategoryId(categoryId);
+        return productRepository.findByCategories_IdAndIsActiveTrue(categoryId); // Giả sử
     }
-    
-    public List<Products> searchProducts(String keyword) {
-        return productRepository.findByNameContainingIgnoreCase(keyword);
+
+    @Override
+    public Page<Products> searchProducts(ProductDto.ProductSearchRequest request) {
+        Sort sort = request.getSortDirection().equalsIgnoreCase(Sort.Direction.DESC.name()) ?
+                Sort.by(request.getSortBy()).descending() : Sort.by(request.getSortBy()).ascending();
+        Pageable pageable = PageRequest.of(request.getPage(), request.getPageSize(), sort);
+
+        // TODO: Implement dynamic query using JPA Specifications for other criteria
+        // in ProductSearchRequest (categoryId, brand, price range, etc.).
+        // For now, we only search by keyword.
+        return productRepository.findByNameContainingAndIsActiveTrue(request.getKeyword(), pageable);
     }
-    
-    public Page<Products> searchProductsWithPagination(String keyword, Pageable pageable) {
-        return productRepository.searchProducts(keyword, pageable);
-    }
-    
+
     public List<Products> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
-        return productRepository.findByPriceBetween(minPrice, maxPrice);
+        return productRepository.findByPriceBetweenAndIsActiveTrue(minPrice, maxPrice); // Giả sử
     }
-    
+
     public List<Products> getInStockProducts() {
-        return productRepository.findInStockProducts();
+        return productRepository.findByStockGreaterThanAndIsActiveTrue(0); // Giả sử
     }
-    
-    public Products createProduct(Products product) {
-        return productRepository.save(product);
+
+    // --- PHẦN TÁI CẤU TRÚC QUAN TRỌNG ---
+
+    public Products getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
-    
-    public Products updateProduct(Long id, Products productDetails) {
-        Products product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        
-        product.setName(productDetails.getName());
-        product.setDescription(productDetails.getDescription());
-        product.setBasePrice(productDetails.getBasePrice());
-        
-        // Sử dụng JPA relationships
-        if (productDetails.getCategory() != null) {
-            product.setCategory(productDetails.getCategory());
+
+    public Products createProduct(ProductDto.CreateProductRequest request) {
+        // Kiểm tra xem sản phẩm với tên này đã tồn tại chưa
+        if (productRepository.existsByName(request.getName())) {
+            throw new DuplicateResourceException("Product with name '" + request.getName() + "' already exists.");
         }
-        if (productDetails.getBrand() != null) {
-            product.setBrand(productDetails.getBrand());
-        }
-        
-        product.setSku(productDetails.getSku());
-        product.setBarcode(productDetails.getBarcode());
-        
-        return productRepository.save(product);
+
+        // Tìm category, nếu không thấy sẽ báo lỗi
+        Categories category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId()));
+
+        Products newProduct = new Products();
+        newProduct.setName(request.getName());
+        newProduct.setDescription(request.getDescription());
+        newProduct.setPrice(request.getPrice());
+        newProduct.setStock(request.getStock());
+        newProduct.setCategories(category);
+        newProduct.setFeatured(request.isFeatured());
+        newProduct.setActive(true); // Mặc định là active khi tạo mới
+
+        return productRepository.save(newProduct);
     }
-    
+
+    public Products updateProduct(Long id, ProductDto.UpdateProductRequest request) {
+        // Tái sử dụng phương thức getProductById để kiểm tra sự tồn tại
+        Products existingProduct = getProductById(id);
+
+        // Cập nhật các trường nếu chúng được cung cấp trong request (không phải null)
+        if (request.getName() != null) existingProduct.setName(request.getName());
+        if (request.getDescription() != null) existingProduct.setDescription(request.getDescription());
+        if (request.getPrice() != null) existingProduct.setPrice(request.getPrice());
+        if (request.getStock() != null) existingProduct.setStock(request.getStock());
+        if (request.getIsFeatured() != null) existingProduct.setFeatured(request.getIsFeatured());
+        if (request.getIsActive() != null) existingProduct.setActive(request.getIsActive());
+
+        // Cập nhật category nếu categoryId được cung cấp
+        if (request.getCategoryId() != null) {
+            Categories category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId()));
+            existingProduct.setCategories(category);
+        }
+
+        return productRepository.save(existingProduct);
+    }
+
     public void deleteProduct(Long id) {
-        Products product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        product.setIsActive(false);
-        productRepository.save(product);
+        if (!productRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Product not found with id: " + id);
+        }
+        productRepository.deleteById(id);
     }
 }
