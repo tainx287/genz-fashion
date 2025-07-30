@@ -2,6 +2,8 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -35,6 +37,7 @@ public class Products {
     // JPA Relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+	@JsonIgnore
     private Categories category;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,7 +60,7 @@ public class Products {
 	}
 
 	public Products(Long productId, String sku, String barcode, String name, String description, Double basePrice,
-			Categories category, Brands brand, Boolean isActive, Date createdAt, Date updatedAt, Date deletedAt) {
+					Categories category, Brands brand, Boolean isActive, Date createdAt, Date updatedAt, Date deletedAt) {
 		super();
 		this.productId = productId;
 		this.sku = sku;

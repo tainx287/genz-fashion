@@ -15,47 +15,35 @@ import jakarta.persistence.TemporalType;
 public class Addresses {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
-    private String streetAddress;
+    private Long address_id;
+    private String street_address;
     private String ward;
     private String district;
     private String city;
     private String province;
-    private String postalCode;
+    private String postal_code;
     private String country;
-    private Boolean isActive;
+    private Boolean is_active;
     @Temporal(TemporalType.DATE)
-    private Date createdAt;
-    
-	public Addresses(Long addressId, String streetAddress, String ward, String district, String city, String province,
-			String postalCode, String country, Boolean isActive, Date createdAt) {
-		super();
-		this.addressId = addressId;
-		this.streetAddress = streetAddress;
-		this.ward = ward;
-		this.district = district;
-		this.city = city;
-		this.province = province;
-		this.postalCode = postalCode;
-		this.country = country;
-		this.isActive = isActive;
-		this.createdAt = createdAt;
+    private Date created_at;
+
+	public Addresses() {
 	}
 
-	public Long getAddressId() {
-		return addressId;
+	public Long getAddress_id() {
+		return address_id;
 	}
 
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
+	public void setAddress_id(Long address_id) {
+		this.address_id = address_id;
 	}
 
-	public String getStreetAddress() {
-		return streetAddress;
+	public String getStreet_address() {
+		return street_address;
 	}
 
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
+	public void setStreet_address(String street_address) {
+		this.street_address = street_address;
 	}
 
 	public String getWard() {
@@ -90,12 +78,12 @@ public class Addresses {
 		this.province = province;
 	}
 
-	public String getPostalCode() {
-		return postalCode;
+	public String getPostal_code() {
+		return postal_code;
 	}
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setPostal_code(String postal_code) {
+		this.postal_code = postal_code;
 	}
 
 	public String getCountry() {
@@ -106,23 +94,32 @@ public class Addresses {
 		this.country = country;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public Boolean getIs_active() {
+		return is_active;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setIs_active(Boolean is_active) {
+		this.is_active = is_active;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public Date getCreated_at() {
+		return created_at;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
 	}
-    
-	
-	
-    
+
+	public Addresses(Long address_id, String street_address, String ward, String district, String city, String province, String postal_code, String country, Boolean is_active, Date created_at) {
+		this.address_id = address_id;
+		this.street_address = street_address;
+		this.ward = ward;
+		this.district = district;
+		this.city = city;
+		this.province = province;
+		this.postal_code = postal_code;
+		this.country = country;
+		this.is_active = is_active;
+		this.created_at = created_at;
+	}
 }

@@ -35,7 +35,7 @@ public class ActivityLogs {
 
 
 	public ActivityLogs(Long logId, String tableName, String actionType, Long recordId, String oldValues,
-			String newValues, Long changedBy, Date changedAt, String ipAddress, String userAgent) {
+						String newValues, Long changedBy, Date changedAt, String ipAddress, String userAgent) {
 		super();
 		this.logId = logId;
 		this.tableName = tableName;
