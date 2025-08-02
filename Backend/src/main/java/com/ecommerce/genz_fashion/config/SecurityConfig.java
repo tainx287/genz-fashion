@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/products/**").permitAll()
                         .requestMatchers("/api/orders/**").permitAll()
+                        .requestMatchers("/api/orders/create").permitAll()
                         .requestMatchers("/api/variant/**").permitAll()
                         .anyRequest().authenticated()
                 );

@@ -9,6 +9,7 @@ public class ProductVariantDTO {
     private String variantSku;
     private String variantBarcode;
     private String sizeName;
+    private Integer quantity;
     private String colorName;
     private Double additionalPrice;
     private Double weight;
@@ -27,9 +28,18 @@ public class ProductVariantDTO {
         this.variantBarcode = variant.getVariantBarcode();
         this.sizeName = variant.getSize_id().getSizeName(); // assuming `Sizes` has getName()
         this.colorName = variant.getColor_id().getColorName(); // assuming `Colors` has getName()
+        this.quantity = variant.getQuantityInStock();
         this.additionalPrice = variant.getAdditionalPrice();
         this.weight = variant.getWeight();
         this.isActive = variant.getActive();
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Long getVariantId() {

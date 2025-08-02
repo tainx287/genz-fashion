@@ -2,10 +2,12 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="product_variants")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductVariants {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

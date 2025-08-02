@@ -2,6 +2,7 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,15 +14,20 @@ public class OrderItems {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
+	@JsonBackReference
 	private Orders order;
 
 	@ManyToOne
 	@JoinColumn(name = "variant_id")
 	private ProductVariants variant_id;
+
     private Integer quantity;
+
     private Double unit_price;
-    private Double total_price;
-    
+
+	@Column(insertable = false, updatable = false)
+	private Double total_price;
+
 	public OrderItems() {
 		super();
 	}

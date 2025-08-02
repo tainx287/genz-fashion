@@ -1,6 +1,7 @@
 package com.ecommerce.genz_fashion.controller;
 
 
+import com.ecommerce.genz_fashion.dto.OrderDTO;
 import com.ecommerce.genz_fashion.entity.Orders;
 import com.ecommerce.genz_fashion.service.orders.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
+@CrossOrigin(origins = "*")
 public class OrderController {
 
     @Autowired
@@ -20,7 +22,7 @@ public class OrderController {
     // Lấy tất cả đơn hàng
     @GetMapping
     public ResponseEntity<List<Orders>> getAllOrders() {
-        List<Orders> orders = orderService.getAllOrdersWithItems();
+        List<Orders> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
@@ -34,12 +36,12 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PostMapping("/create")
+    public ResponseEntity<Orders> createOrder(@RequestBody OrderDTO orderDTO) {
+        System.out.println("Created Order: " + orderDTO.getPaymentMethod());
+        Orders createdOrder = orderService.createOrderFromDTO(orderDTO);
 
-    // Tạo đơn hàng
-    @PostMapping
-    public ResponseEntity<Orders> createOrder(@RequestBody Orders order) {
-        Orders created = orderService.createOrder(order, order.getOrderItems());
-        return ResponseEntity.ok(created);
+        return ResponseEntity.ok(createdOrder);
     }
 
     // Cập nhật đơn hàng

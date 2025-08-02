@@ -2,6 +2,8 @@ package com.ecommerce.genz_fashion.entity;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -24,6 +26,7 @@ public class Orders {
 	@ManyToOne
 	@JoinColumn(name = "address_id")
     private Addresses address_id;
+
     @Temporal(TemporalType.DATE)
     private Date order_date;
     private Double subtotal;
@@ -31,17 +34,14 @@ public class Orders {
     private Double shipping_fee;
     private Double total_amount;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
-    private OrderStatus order_status;
-    
-    @Enumerated(EnumType.STRING)
+    private String order_status;
+
     @Column(name = "payment_method")
-    private PaymentMethod payment_method;
-    
-    @Enumerated(EnumType.STRING)
+    private String payment_method;
+
     @Column(name = "payment_status")
-    private PaymentStatus payment_status;
+    private String payment_status;
     private String voucher_code;
     private String notes;
     @Temporal(TemporalType.DATE)
@@ -50,8 +50,8 @@ public class Orders {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", referencedColumnName = "order_id", insertable = false, updatable = false)
+	@JsonManagedReference
 	private List<OrderItems> orderItems;
-
 
 
 
@@ -94,17 +94,6 @@ public class Orders {
 			this.userId = user.getUser_id();
 		}
 	}
-    public enum OrderStatus {
-        pending, confirmed, processing, shipped, delivered, cancelled
-    }
-    
-    public enum PaymentMethod {
-        cod, credit_card, paypal, bank_transfer
-    }
-    
-    public enum PaymentStatus {
-        unpaid, paid, partial, refunded
-    }
 
 	public Addresses getAddress_id() {
 		return address_id;
@@ -154,27 +143,27 @@ public class Orders {
 		this.total_amount = total_amount;
 	}
 
-	public OrderStatus getOrder_status() {
+	public String getOrder_status() {
 		return order_status;
 	}
 
-	public void setOrder_status(OrderStatus order_status) {
+	public void setOrder_status(String order_status) {
 		this.order_status = order_status;
 	}
 
-	public PaymentMethod getPayment_method() {
+	public String getPayment_method() {
 		return payment_method;
 	}
 
-	public void setPayment_method(PaymentMethod payment_method) {
+	public void setPayment_method(String payment_method) {
 		this.payment_method = payment_method;
 	}
 
-	public PaymentStatus getPayment_status() {
+	public String getPayment_status() {
 		return payment_status;
 	}
 
-	public void setPayment_status(PaymentStatus payment_status) {
+	public void setPayment_status(String payment_status) {
 		this.payment_status = payment_status;
 	}
 
@@ -210,7 +199,7 @@ public class Orders {
 		this.cancelled_reason = cancelled_reason;
 	}
 
-	public Orders(Long orderId, Long userId, Users user, Addresses address_id, Date order_date, Double subtotal, Double discount_amount, Double shipping_fee, Double total_amount, OrderStatus order_status, PaymentMethod payment_method, PaymentStatus payment_status, String voucher_code, String notes, Date cancelled_at, String cancelled_reason) {
+	public Orders(Long orderId, Long userId, Users user, Addresses address_id, Date order_date, Double subtotal, Double discount_amount, Double shipping_fee, Double total_amount, String order_status, String payment_method, String payment_status, String voucher_code, String notes, Date cancelled_at, String cancelled_reason, List<OrderItems> orderItems) {
 		this.orderId = orderId;
 		this.userId = userId;
 		this.user = user;
@@ -227,5 +216,6 @@ public class Orders {
 		this.notes = notes;
 		this.cancelled_at = cancelled_at;
 		this.cancelled_reason = cancelled_reason;
+		this.orderItems = orderItems;
 	}
 }
